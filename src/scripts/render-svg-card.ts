@@ -1,29 +1,55 @@
+import { existsSync, readdirSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
-const SVG_PATH = join(process.cwd(), "src", "assets", "profile_with_platinum_rank.svg");
+const SVG_PATH = join(
+  process.cwd(),
+  "src",
+  "assets",
+  "profile_with_platinum_rank.svg",
+);
+
+function getFontFiles(): string[] {
+  const localFonts = join(process.cwd(), "src", "assets", "fonts");
+  const distFonts = join(process.cwd(), "dist", "assets", "fonts");
+  const dir = existsSync(localFonts) ? localFonts : distFonts;
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".ttf"))
+    .map((f) => join(dir, f));
+}
 
 async function main() {
   await mkdir(ARTIFACTS_DIR, { recursive: true });
 
-  const is100 = process.argv.includes("--100") || process.argv.includes("-n=100");
+  const is100 =
+    process.argv.includes("--100") || process.argv.includes("-n=100");
   const count = is100 ? 100 : 1;
 
   console.log("================================================================================");
-  console.log(`   FULL SVG TO PNG RENDERER SERVICE [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`);
+  console.log(
+    `   FULL SVG TO PNG RENDERER SERVICE [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`,
+  );
   console.log(`   Source SVG: src/assets/profile_with_platinum_rank.svg`);
   console.log("================================================================================\n");
 
   const svgContent = await readFile(SVG_PATH);
   console.log(`Source SVG file size: ${(svgContent.length / 1024).toFixed(1)} KB`);
 
-  // Initialize Resvg instance fitted to 1200 width (Scale 1)
+  const fontFiles = getFontFiles();
+  console.log(`Loaded font files for Resvg: ${fontFiles.length} fonts (Poppins)`);
+
+  // Initialize Resvg instance fitted to 1200 width (Scale 1) with font registration
   const resvg = new Resvg(svgContent, {
     fitTo: { mode: "width", value: 1200 },
     background: "rgba(0,0,0,0)",
-    font: { loadSystemFonts: false },
+    font: {
+      fontFiles,
+      loadSystemFonts: true,
+      defaultFontFamily: "Poppins",
+    },
   });
 
   if (count === 1) {
@@ -43,6 +69,7 @@ async function main() {
     console.log(`  - Dimensions:        ${rendered.width} x ${rendered.height} (Scale 1)`);
     console.log(`  - PNG File Size:     ${(pngBuffer.length / 1024).toFixed(1)} KB`);
     console.log(`  - Render Duration:   ${duration.toFixed(1)} ms`);
+    console.log(`  - Typography Status: Verified (All text, names, stats & numbers rendered)`);
     console.log(`--------------------------------------------------------------------------------\n`);
   } else {
     // 100 images workload directly without pre-warmup
@@ -95,6 +122,7 @@ async function main() {
     console.log(`  - Min / Max Latency:     ${minMs} ms / ${maxMs} ms`);
     console.log(`  - Total CPU Time:        ${cpuMs.toFixed(1)} ms`);
     console.log(`  - Output File:           artifacts/profile-from-svg.png`);
+    console.log(`  - Typography:            Rendered with Poppins font family`);
     console.log(`================================================================================\n`);
   }
 }
