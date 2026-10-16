@@ -197,14 +197,28 @@ const drawAvatar = async (
   ctx.lineWidth = 1;
 };
 
+export type RankIconLoader = (
+  icon: string,
+  logicalSize: number,
+) => Promise<any | null | undefined>;
+
+export interface RankProfileCardRendererOptions {
+  scale?: number;
+  customRankIconLoader?: RankIconLoader;
+}
+
 const drawRankIcon = async (
   ctx: SKRSContext2D,
   icon: string,
   x: number,
   y: number,
   size: number,
+  customLoader?: RankIconLoader,
 ) => {
-  const img = await loadRankImage(icon);
+  let img = customLoader ? await customLoader(icon, size) : null;
+  if (!img) {
+    img = await loadRankImage(icon);
+  }
   if (!img) return;
 
   ctx.save();
@@ -218,17 +232,25 @@ const drawRankIcon = async (
 };
 
 export class RankProfileCardRenderer {
+  private readonly scale: number;
+  private readonly customRankIconLoader?: RankIconLoader;
+
+  constructor(options: RankProfileCardRendererOptions = {}) {
+    this.scale = options.scale ?? 2;
+    this.customRankIconLoader = options.customRankIconLoader;
+  }
+
   async render(input: RankProfileCardInput): Promise<RenderResult> {
     const data = normalizeRankProfile(input);
 
-    const SCALE = 6; // render at 2x
+    const SCALE = this.scale;
     const W = 1200 * SCALE;
     const H = 760 * SCALE;
 
     const canvas = createCanvas(W, H);
     const ctx = canvas.getContext("2d");
 
-    // Scale all drawing operations by 2x
+    // Scale all drawing operations by scale factor
     ctx.scale(SCALE, SCALE);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -266,6 +288,7 @@ export class RankProfileCardRenderer {
       180 + nameWidth + 10,
       66,
       60,
+      this.customRankIconLoader,
     );
 
     // ── Badges ────────────────────────────────────────────────────────────
@@ -377,7 +400,14 @@ export class RankProfileCardRenderer {
     text(ctx, "TO NEXT RANK GROUP", 450, 470, 12, C.muted, 600);
 
     // Current rank icon + name
-    await drawRankIcon(ctx, data.rankTransition.current.icon, 450, 474, 48);
+    await drawRankIcon(
+      ctx,
+      data.rankTransition.current.icon,
+      450,
+      474,
+      48,
+      this.customRankIconLoader,
+    );
     text(ctx, data.rankTransition.current.name, 506, 503, 18, C.ink, 700);
 
     // Arrow — drawn manually (Poppins missing → glyph)
@@ -397,7 +427,14 @@ export class RankProfileCardRenderer {
     ctx.lineWidth = 1;
 
     // Next rank icon + name
-    await drawRankIcon(ctx, data.rankTransition.next.icon, 656, 474, 48);
+    await drawRankIcon(
+      ctx,
+      data.rankTransition.next.icon,
+      656,
+      474,
+      48,
+      this.customRankIconLoader,
+    );
     text(ctx, data.rankTransition.next.name, 712, 503, 18, C.ink, 700);
 
     ctx.fillStyle = "#EAE5F5";
