@@ -8,6 +8,9 @@
     "start": "node dist/server.js",
     "test": "vitest run",
     "render:sample": "tsx src/scripts/render-rank-profile-sample.ts",
+    "render:scale1:svg": "tsx src/scripts/render-scale1-svg.ts",
+    "render:scale1:png": "tsx src/scripts/render-scale1-png.ts",
+    "compare:scale1": "tsx src/scripts/compare-scale1.ts",
     "render:compare": "tsx src/scripts/render-comparison-samples.ts",
     "benchmark:rank-svg": "npm run build && tsx src/scripts/benchmark-rank-svg.ts"
   },
