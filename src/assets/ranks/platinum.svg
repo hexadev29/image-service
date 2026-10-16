@@ -1,0 +1,565 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="100%" height="100%">
+  <defs>
+    <!-- ==================== OUTER FRAME & BEVEL GRADIENTS ==================== -->
+    <linearGradient id="frameTopLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d2e6f2" />
+      <stop offset="45%" stop-color="#f7fcff" />
+      <stop offset="85%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#c3ddec" />
+    </linearGradient>
+
+    <linearGradient id="frameTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="35%" stop-color="#eef8fd" />
+      <stop offset="75%" stop-color="#d5e9f5" />
+      <stop offset="100%" stop-color="#b8d4e5" />
+    </linearGradient>
+
+    <linearGradient id="innerBandTopLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78b1cd" />
+      <stop offset="28%" stop-color="#b7dfef" />
+      <stop offset="65%" stop-color="#eef9fe" />
+      <stop offset="100%" stop-color="#d0eaf7" />
+    </linearGradient>
+
+    <linearGradient id="innerBandTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8ec2db" />
+      <stop offset="35%" stop-color="#cde9f6" />
+      <stop offset="70%" stop-color="#f7fdff" />
+      <stop offset="100%" stop-color="#bce0f2" />
+    </linearGradient>
+
+    <linearGradient id="innerBandBotLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#96c3dc" />
+      <stop offset="50%" stop-color="#7aa9c4" />
+      <stop offset="100%" stop-color="#b6d9ec" />
+    </linearGradient>
+
+    <linearGradient id="innerBandBotRight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c2e2f2" />
+      <stop offset="50%" stop-color="#9fc9e0" />
+      <stop offset="100%" stop-color="#e2f4fc" />
+    </linearGradient>
+
+    <linearGradient id="bezelTopLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#44738f" />
+      <stop offset="50%" stop-color="#75aecb" />
+      <stop offset="100%" stop-color="#4e829f" />
+    </linearGradient>
+
+    <linearGradient id="bezelTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#487c99" />
+      <stop offset="55%" stop-color="#6da7c6" />
+      <stop offset="100%" stop-color="#35637f" />
+    </linearGradient>
+
+    <linearGradient id="bezelBotLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173e54" />
+      <stop offset="50%" stop-color="#387f9f" />
+      <stop offset="100%" stop-color="#58a6c4" />
+    </linearGradient>
+
+    <linearGradient id="bezelBotRight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#163b50" />
+      <stop offset="50%" stop-color="#1e4d68" />
+      <stop offset="100%" stop-color="#0d2638" />
+    </linearGradient>
+
+    <!-- ==================== CENTRAL DIAMOND GRADIENTS ==================== -->
+    <linearGradient id="coreTL" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="55%" stop-color="#e5f6fd" />
+      <stop offset="100%" stop-color="#aeddf2" />
+    </linearGradient>
+
+    <linearGradient id="coreTR" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c8ecfa" />
+      <stop offset="50%" stop-color="#9ad8f0" />
+      <stop offset="100%" stop-color="#6fc1e2" />
+    </linearGradient>
+
+    <linearGradient id="coreBL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#75c2e0" />
+      <stop offset="48%" stop-color="#b5e5f6" />
+      <stop offset="75%" stop-color="#eefaff" />
+      <stop offset="100%" stop-color="#c3e9f8" />
+    </linearGradient>
+
+    <linearGradient id="coreBR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#48a5cb" />
+      <stop offset="45%" stop-color="#63b8da" />
+      <stop offset="80%" stop-color="#90d2ec" />
+      <stop offset="100%" stop-color="#cdeefb" />
+    </linearGradient>
+
+    <!-- ==================== TOP & BOTTOM GEM GRADIENTS ==================== -->
+    <linearGradient id="topGemUL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#ebf8fe" />
+      <stop offset="100%" stop-color="#c6e5f5" />
+    </linearGradient>
+
+    <linearGradient id="topGemUR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d8effa" />
+      <stop offset="55%" stop-color="#9ec7de" />
+      <stop offset="100%" stop-color="#76a8c4" />
+    </linearGradient>
+
+    <linearGradient id="topGemLL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bce2f4" />
+      <stop offset="60%" stop-color="#e3f5fd" />
+      <stop offset="100%" stop-color="#9ac8e0" />
+    </linearGradient>
+
+    <linearGradient id="topGemLR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#498db2" />
+      <stop offset="60%" stop-color="#6fa9c9" />
+      <stop offset="100%" stop-color="#2f6382" />
+    </linearGradient>
+
+    <!-- ==================== WING & CHEVRON GRADIENTS ==================== -->
+    <linearGradient id="wingBright" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#e1f3fc" />
+      <stop offset="100%" stop-color="#b5daec" />
+    </linearGradient>
+
+    <linearGradient id="wingMidBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cce8f6" />
+      <stop offset="50%" stop-color="#94c1da" />
+      <stop offset="100%" stop-color="#699ab7" />
+    </linearGradient>
+
+    <linearGradient id="wingDarkSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6a98b5" />
+      <stop offset="55%" stop-color="#426d89" />
+      <stop offset="100%" stop-color="#214056" />
+    </linearGradient>
+
+    <linearGradient id="wingDeepNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3c647e" />
+      <stop offset="50%" stop-color="#224259" />
+      <stop offset="100%" stop-color="#102536" />
+    </linearGradient>
+
+    <linearGradient id="chevronSilverL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8bb6cf" />
+      <stop offset="40%" stop-color="#e3f4fc" />
+      <stop offset="80%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#b5d8ea" />
+    </linearGradient>
+
+    <linearGradient id="chevronSilverR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8bb6cf" />
+      <stop offset="40%" stop-color="#e3f4fc" />
+      <stop offset="80%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#b5d8ea" />
+    </linearGradient>
+  </defs>
+
+  <!-- ======================================================================= -->
+  <!-- 1. BASE SILHOUETTE / DARK INK BACKING                                   -->
+  <!-- ======================================================================= -->
+  <path d="M 500 36
+           L 576 165 L 571 176 L 824 491 L 803 558 L 821 511
+           L 845 447 L 981 353 L 939 521 L 916 544 L 949 527
+           L 876 643 L 774 699 L 743 736 L 662 766 L 563 836
+           L 557 866 L 500 966 L 443 866 L 437 836 L 338 766
+           L 257 736 L 226 699 L 124 643 L 51 527 L 84 544
+           L 61 521 L 19 353 L 155 447 L 179 511 L 197 558
+           L 176 491 L 429 176 L 424 165 Z" fill="#0b1d2c" stroke="#07131e" stroke-width="6" stroke-linejoin="round" />
+
+  <!-- ======================================================================= -->
+  <!-- 2. OUTER DIAMOND FRAME & RECESSED CHANNELS                              -->
+  <!-- ======================================================================= -->
+  <g id="outer-diamond-frame" stroke-linejoin="round">
+    <!-- Left Upper Outer Rim -->
+    <polygon points="430,176 178,492 218,492 446,210" fill="url(#frameTopLeft)" stroke="#0d2334" stroke-width="3" />
+    <!-- Top-Left Rim Shadow Patch near Gem -->
+    <polygon points="430,176 402,211 422,240 446,210" fill="#89afc6" />
+    <polygon points="402,211 372,248 394,274 422,240" fill="#bfdbea" />
+    <!-- Left Outer Corner Bevel -->
+    <polygon points="178,492 218,492 236,574 198,558" fill="#50728a" stroke="#0d2334" stroke-width="3" />
+    <polygon points="178,492 198,558 214,548 195,492" fill="#7da1b9" />
+    <polygon points="218,492 236,574 222,566 206,492" fill="#29465b" />
+
+    <!-- Right Upper Outer Rim -->
+    <polygon points="570,176 822,492 782,492 554,210" fill="url(#frameTopRight)" stroke="#0d2334" stroke-width="3" />
+    <!-- Top-Right Rim Shadow Patch near Gem -->
+    <polygon points="570,176 598,211 578,240 554,210" fill="#9ec0d5" />
+    <polygon points="695,333 742,392 722,416 675,357" fill="#d9edf8" />
+    <!-- Right Outer Corner Bevel -->
+    <polygon points="822,492 782,492 764,574 802,558" fill="#496b82" stroke="#0d2334" stroke-width="3" />
+    <polygon points="822,492 802,558 786,548 805,492" fill="#315066" />
+    <polygon points="782,492 764,574 778,566 794,492" fill="#6b90a8" />
+
+    <!-- Deep Recessed Dark Frame Groove -->
+    <polygon points="446,210 218,492 236,492 455,224" fill="#10293b" stroke="#091a28" stroke-width="2" />
+    <polygon points="554,210 782,492 764,492 545,224" fill="#10293b" stroke="#091a28" stroke-width="2" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 3. INNER CRYSTALLINE FRAME BAND (SURROUNDING CENTRAL CORE)              -->
+  <!-- ======================================================================= -->
+  <g id="inner-crystalline-frame" stroke-linejoin="round">
+    <!-- Top-Left Inner Frame Band -->
+    <polygon points="455,224 236,492 292,492 484,264" fill="url(#innerBandTopLeft)" stroke="#0e2536" stroke-width="3" />
+    <!-- Top-Left Frame Internal Ice Facets -->
+    <polygon points="455,224 415,273 433,288 468,244" fill="#6da4c0" />
+    <polygon points="468,244 433,288 446,308 484,264" fill="#4e85a3" />
+    <polygon points="415,273 386,308 416,344 446,308 433,288" fill="#9bcbe0" />
+    <polygon points="396,308 415,286 432,306 413,328" fill="#cae8f6" />
+    <polygon points="386,308 338,367 368,402 416,344" fill="#d9f1fb" />
+    <polygon points="338,367 276,443 308,473 368,402" fill="#ffffff" />
+    <polygon points="276,443 236,492 292,492 308,473" fill="#b7dced" />
+    <polygon points="236,492 264,492 288,463 268,453" fill="#8bb9d1" />
+
+    <!-- Top-Right Inner Frame Band -->
+    <polygon points="545,224 764,492 708,492 516,264" fill="url(#innerBandTopRight)" stroke="#0e2536" stroke-width="3" />
+    <!-- Top-Right Frame Internal Ice Facets -->
+    <polygon points="545,224 585,273 567,288 532,244" fill="#7cb0cb" />
+    <polygon points="532,244 567,288 554,308 516,264" fill="#568caa" />
+    <polygon points="585,273 618,314 586,348 554,308 567,288" fill="#b2dced" />
+    <polygon points="586,302 605,325 586,348 568,325" fill="#d8f0fa" />
+    <polygon points="618,314 662,368 632,402 586,348" fill="#e8f7fd" />
+    <polygon points="632,402 662,368 716,434 686,466" fill="#ffffff" />
+    <polygon points="716,434 764,492 708,492 686,466" fill="#bfe0f0" />
+    <polygon points="736,492 764,492 732,453 714,466" fill="#8ab8d0" />
+
+    <!-- Bottom-Left Inner Frame Band -->
+    <polygon points="236,492 292,492 500,755 500,818" fill="url(#innerBandBotLeft)" stroke="#0e2536" stroke-width="3" />
+    <polygon points="236,492 264,492 500,786 500,818" fill="#d9effa" />
+    <polygon points="264,492 292,492 500,755 500,786" fill="#7aa9c4" />
+    <polygon points="236,492 292,492 315,521 258,520" fill="#6393b0" />
+
+    <!-- Bottom-Right Inner Frame Band -->
+    <polygon points="764,492 708,492 500,755 500,818" fill="url(#innerBandBotRight)" stroke="#0e2536" stroke-width="3" />
+    <polygon points="764,492 736,492 500,786 500,818" fill="#a2cbe0" />
+    <polygon points="736,492 708,492 500,755 500,786" fill="#dff2fb" />
+    <polygon points="764,492 708,492 685,521 742,520" fill="#7caac4" />
+
+    <!-- Miter Lines at Horizontal Frame Waist -->
+    <line x1="236" y1="492" x2="292" y2="492" stroke="#10293b" stroke-width="3.5" />
+    <line x1="708" y1="492" x2="764" y2="492" stroke="#10293b" stroke-width="3.5" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 4. DEEP INNER BEZEL SURROUNDING CENTRAL DIAMOND                         -->
+  <!-- ======================================================================= -->
+  <g id="central-bezel" stroke-linejoin="round">
+    <!-- Top-Left Bezel -->
+    <polygon points="484,264 292,492 330,502 500,290 500,275" fill="url(#bezelTopLeft)" stroke="#0d2334" stroke-width="2.5" />
+    <polygon points="445,310 310,470 330,502 456,345" fill="#9ad0e7" opacity="0.65" />
+
+    <!-- Top-Right Bezel -->
+    <polygon points="516,264 708,492 670,502 500,290 500,275" fill="url(#bezelTopRight)" stroke="#0d2334" stroke-width="2.5" />
+    <polygon points="555,310 690,470 670,502 544,345" fill="#8bc3dc" opacity="0.55" />
+
+    <!-- Bottom-Left Bezel (Deep Teal & Navy Grooves) -->
+    <polygon points="292,492 330,502 500,712 500,755" fill="url(#bezelBotLeft)" stroke="#091c2b" stroke-width="3" />
+    <polygon points="292,492 312,497 500,734 500,755" fill="#4690b0" />
+    <polygon points="312,497 330,502 500,712 500,734" fill="#102e42" />
+    <line x1="304" y1="496" x2="500" y2="742" stroke="#76c5e0" stroke-width="2" opacity="0.8" />
+
+    <!-- Bottom-Right Bezel (Deepest Shadow Channel) -->
+    <polygon points="708,492 670,502 500,712 500,755" fill="url(#bezelBotRight)" stroke="#091c2b" stroke-width="3" />
+    <polygon points="708,492 688,497 500,734 500,755" fill="#1f506c" />
+    <polygon points="688,497 670,502 500,712 500,734" fill="#0b2030" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 5. CENTRAL CORE DIAMOND (STARBURST & ASYMMETRIC ICE FACETS)             -->
+  <!-- ======================================================================= -->
+  <g id="central-core-diamond" stroke-linejoin="round">
+    <!-- Base Quadrants -->
+    <polygon points="500,290 330,502 500,502" fill="url(#coreTL)" />
+    <polygon points="500,290 670,502 500,502" fill="url(#coreTR)" />
+    <polygon points="330,502 500,712 500,502" fill="url(#coreBL)" />
+    <polygon points="670,502 500,712 500,502" fill="url(#coreBR)" />
+
+    <!-- === Top-Left Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="500,290 330,502 354,502 500,318" fill="#c4e8f8" />
+    <polygon points="462,337 396,420 412,430 472,354" fill="#9fd7ef" />
+    <!-- Mid Crystalline Shards -->
+    <polygon points="500,318 452,378 476,412 500,375" fill="#dcf2fc" />
+    <polygon points="452,378 398,445 432,462 476,412" fill="#e9f8fe" />
+    <polygon points="398,445 354,502 415,502 432,462" fill="#d4effb" />
+    <!-- Inner Star Core Facet (Pure White) -->
+    <polygon points="500,375 476,412 432,462 415,502 500,502" fill="#ffffff" />
+
+    <!-- === Top-Right Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="500,290 670,502 646,502 500,318" fill="#b4e2f6" />
+    <!-- Distinct Turquoise & White Ice Polygons -->
+    <polygon points="500,318 558,390 526,396 500,368" fill="#7acae8" />
+    <polygon points="558,390 584,422 545,428 526,396" fill="#bce8f8" />
+    <polygon points="500,368 526,396 545,428 500,455" fill="#e6f7fd" />
+    <polygon points="545,428 584,422 606,450 564,468" fill="#f4fbff" />
+    <polygon points="584,422 646,502 606,450" fill="#9edbf2" />
+    <!-- Inner Star Diagonal Ray -->
+    <polygon points="500,455 545,428 564,468 500,502" fill="#ffffff" />
+    <polygon points="500,502 564,468 606,450 646,502" fill="#82cce8" />
+    <polygon points="535,484 585,460 622,502 500,502" fill="#6abde0" opacity="0.65" />
+
+    <!-- === Bottom-Left Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="330,502 500,712 500,684 354,502" fill="#bce5f6" />
+    <!-- Upper Aqua Triangle -->
+    <polygon points="354,502 500,502 444,574" fill="#77c3e2" />
+    <polygon points="354,502 418,502 402,540" fill="#96d5ee" />
+    <!-- Mid & Lower Brilliant White/Ice Rays -->
+    <polygon points="500,502 444,574 470,618 500,580" fill="#dcf3fc" />
+    <polygon points="500,502 500,645 470,618" fill="#f7fdff" />
+    <polygon points="354,502 444,574 470,618 500,645 500,684" fill="#c9ecfa" />
+    <polygon points="424,598 470,618 500,645 500,684" fill="#e8f8fe" />
+
+    <!-- === Bottom-Right Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="670,502 500,712 500,684 646,502" fill="#cbeTFb" />
+    <!-- Radial Light & Cerulean Rays from Center -->
+    <polygon points="500,502 646,502 604,554" fill="#46a3c9" />
+    <polygon points="500,502 604,554 594,566" fill="#a8e4f8" />
+    <polygon points="500,502 594,566 562,606" fill="#52add2" />
+    <polygon points="500,502 562,606 500,684" fill="#80c8e5" />
+    <polygon points="500,595 546,626 500,684" fill="#bfe8f8" />
+    <polygon points="500,502 532,568 500,610" fill="#9ad8ef" />
+
+    <!-- === Central Diamond Inner Bevel Outline & Crosshair Starburst === -->
+    <polygon points="500,318 646,502 500,684 354,502" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.9" />
+    <!-- Horizontal & Vertical Starburst Ridge Lines -->
+    <line x1="500" y1="290" x2="500" y2="712" stroke="#ffffff" stroke-width="3.5" />
+    <line x1="330" y1="502" x2="670" y2="502" stroke="#ffffff" stroke-width="3.5" />
+    <!-- Subtle Dark Accent Along Bottom-Right Inner Frame -->
+    <polyline points="330,502 500,712 670,502" fill="none" stroke="#0c2638" stroke-width="3.5" />
+    <polyline points="330,502 500,290 670,502" fill="none" stroke="#1a4560" stroke-width="2.5" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 6. TOP CROWN CRYSTAL GEM                                                -->
+  <!-- ======================================================================= -->
+  <g id="top-crown-gem" stroke-linejoin="round">
+    <!-- Upper-Left Main Facet -->
+    <polygon points="500,38 425,165 500,178" fill="url(#topGemUL)" />
+    <!-- Frosty Streak on Upper-Left Facet -->
+    <polygon points="500,38 456,112 478,128 500,90" fill="#d4ecf8" />
+    <polygon points="442,136 425,165 468,172 478,148" fill="#dff2fc" />
+
+    <!-- Upper-Right Main Facet -->
+    <polygon points="500,38 575,165 500,178" fill="url(#topGemUR)" />
+    <!-- Inner Triangle Highlight on Upper-Right -->
+    <polygon points="500,68 554,158 500,168" fill="#d0eaf7" />
+    <polygon points="500,95 542,155 500,164" fill="#eef9fe" />
+
+    <!-- Waist Bevel Band -->
+    <polygon points="425,165 500,178 500,188 448,178" fill="#a2cde3" />
+    <polygon points="575,165 500,178 500,188 552,178" fill="#6b9db9" />
+
+    <!-- Lower-Left Inner Facet -->
+    <polygon points="448,178 500,188 500,300" fill="url(#topGemLL)" />
+    <polygon points="462,181 486,186 500,275 500,300" fill="#ffffff" opacity="0.7" />
+
+    <!-- Lower-Right Inner Facet -->
+    <polygon points="552,178 500,188 500,300" fill="url(#topGemLR)" />
+    <polygon points="552,178 525,183 500,265 500,300" fill="#7ab8d6" opacity="0.65" />
+
+    <!-- Lower Outer Rim Bevels (Left & Right) -->
+    <polygon points="425,165 448,178 500,300 500,323 430,195" fill="#4f7893" />
+    <polygon points="425,165 430,195 458,248 448,178" fill="#7aa3bd" />
+    <polygon points="575,165 552,178 500,300 500,323 570,195" fill="#1e3c52" />
+    <polygon points="552,178 538,212 500,300 500,323" fill="#37627d" />
+
+    <!-- Specular Ridges & Ink Outlines -->
+    <line x1="500" y1="38" x2="500" y2="300" stroke="#ffffff" stroke-width="2.5" />
+    <polyline points="425,165 500,178 575,165" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polyline points="448,178 500,300 552,178" fill="none" stroke="#e0f4fc" stroke-width="1.8" />
+    <polygon points="500,38 575,165 570,195 500,323 430,195 425,165" fill="none" stroke="#081724" stroke-width="4" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 7. LOWER CHEVRON BARS & STEPPED ARMOR BASE                              -->
+  <!-- ======================================================================= -->
+  <g id="lower-chevrons-and-base" stroke-linejoin="round">
+    <!-- === LEFT SIDE CHEVRONS === -->
+    <!-- Inner Dark Slot -->
+    <polygon points="274,558 292,580 484,812 468,826" fill="#0f2537" />
+    <!-- Bright Silver Diagonal Bar -->
+    <polygon points="282,588 302,576 484,802 464,824" fill="url(#chevronSilverL)" stroke="#0d2334" stroke-width="2.5" />
+    <line x1="292" y1="582" x2="474" y2="812" stroke="#ffffff" stroke-width="2.5" />
+    <!-- Second Dark Groove -->
+    <polygon points="295,616 464,824 452,838 305,648" fill="#132c3f" stroke="#091a28" stroke-width="2" />
+    <!-- Outer Faceted V-Plate -->
+    <polygon points="305,648 452,838 438,856 338,766" fill="#8ab5ce" stroke="#0d2334" stroke-width="3" />
+    <polygon points="305,648 378,742 356,756 322,702" fill="#d8effa" />
+    <polygon points="378,742 452,838 438,856 392,814" fill="#dceffb" />
+    <polygon points="322,702 356,756 392,814 338,766" fill="#547d98" />
+    <!-- Left Dark Armored Base Step -->
+    <polygon points="226,655 318,698 338,766 257,736" fill="#234056" stroke="#081724" stroke-width="3.5" />
+    <polygon points="246,678 308,706 322,748 268,726" fill="#4e748e" />
+    <polygon points="246,678 268,726 322,748 314,724" fill="#34566e" />
+
+    <!-- === RIGHT SIDE CHEVRONS === -->
+    <!-- Inner Dark Slot -->
+    <polygon points="726,558 708,580 516,812 532,826" fill="#0f2537" />
+    <!-- Bright Silver Diagonal Bar -->
+    <polygon points="718,588 698,576 516,802 536,824" fill="url(#chevronSilverR)" stroke="#0d2334" stroke-width="2.5" />
+    <line x1="708" y1="582" x2="526" y2="812" stroke="#ffffff" stroke-width="2.5" />
+    <!-- Second Dark Groove -->
+    <polygon points="705,616 536,824 548,838 695,648" fill="#132c3f" stroke="#091a28" stroke-width="2" />
+    <!-- Outer Faceted V-Plate -->
+    <polygon points="695,648 548,838 562,856 662,766" fill="#6b96b1" stroke="#0d2334" stroke-width="3" />
+    <polygon points="695,648 622,742 644,756 678,702" fill="#cbe7f6" />
+    <polygon points="622,742 548,838 562,856 608,814" fill="#b5d9ec" />
+    <polygon points="678,702 644,756 608,814 662,766" fill="#385e78" />
+    <!-- Right Dark Armored Base Step -->
+    <polygon points="774,655 682,698 662,766 743,736" fill="#1c364a" stroke="#081724" stroke-width="3.5" />
+    <polygon points="754,678 692,706 678,748 732,726" fill="#466b85" />
+    <polygon points="754,678 732,726 678,748 686,724" fill="#2b4b62" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 8. LATERAL CRYSTAL WINGS (LEFT & RIGHT TRI-SPIKE CLUSTERS)              -->
+  <!-- ======================================================================= -->
+  <!-- === LEFT WING CLUSTER === -->
+  <g id="left-wing-cluster" stroke-linejoin="round">
+    <!-- 8A. Secondary Lower-Outer Spike (Left) -->
+    <polygon points="52,528 180,582 146,616" fill="url(#wingBright)" />
+    <polygon points="52,528 125,642 146,616" fill="url(#wingMidBlue)" />
+    <polygon points="180,582 235,705 146,616" fill="#9bc5dc" />
+    <polygon points="125,642 146,616 235,705" fill="url(#wingDarkSlate)" />
+    <polygon points="125,642 158,668 235,705 146,616" fill="#25455c" />
+    <!-- Ridges & Outline -->
+    <polyline points="52,528 146,616 235,705" fill="none" stroke="#ffffff" stroke-width="2" />
+    <line x1="125" y1="642" x2="146" y2="616" stroke="#e0f4fc" stroke-width="1.8" />
+    <polygon points="52,528 180,582 235,705 125,642" fill="none" stroke="#081724" stroke-width="3.8" />
+
+    <!-- 8B. Primary Upper-Outer Wing Spike (Left) -->
+    <!-- Top-Left Main Facet -->
+    <polygon points="20,355 155,448 108,488" fill="url(#wingBright)" />
+    <polygon points="20,355 92,432 108,488 64,452" fill="#d4edf9" />
+    <!-- Outer-Left Facet -->
+    <polygon points="20,355 62,520 108,488" fill="#bce0f2" />
+    <polygon points="20,355 46,458 84,452" fill="#e8f7fd" />
+    <!-- Inner-Right Upper Facet -->
+    <polygon points="155,448 202,592 108,488" fill="#d0eaf7" />
+    <polygon points="155,448 176,512 132,514 108,488" fill="#eef9fe" />
+    <!-- Lower-Left Shaded Facet -->
+    <polygon points="62,520 108,488 202,592" fill="url(#wingDarkSlate)" />
+    <polygon points="62,520 96,512 192,586 142,566" fill="#325973" />
+    <!-- Outer Rim Step Under Main Wing -->
+    <polygon points="155,448 174,458 212,578 202,592" fill="#7aa6c0" stroke="#081724" stroke-width="2.5" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="20,355 108,488 202,592" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="62,520 108,488 155,448" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polygon points="20,355 155,448 202,592 62,520" fill="none" stroke="#081724" stroke-width="4" />
+
+    <!-- 8C. Inner Flank Crystal Gem (Left) -->
+    <polygon points="180,512 295,600 262,610" fill="url(#wingBright)" />
+    <polygon points="180,512 235,650 262,610" fill="#9bc7de" />
+    <polygon points="180,512 214,594 246,586" fill="#dcf1fb" />
+    <polygon points="295,600 318,698 262,610" fill="#bce2f4" />
+    <!-- Inner Teal Sub-Triangle -->
+    <polygon points="262,610 298,642 312,688 248,638" fill="#528fae" />
+    <polygon points="235,650 262,610 318,698" fill="#3a6884" opacity="0.65" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="180,512 262,610 318,698" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="235,650 262,610 295,600" fill="none" stroke="#e6f7fd" stroke-width="1.8" />
+    <polygon points="180,512 295,600 318,698 235,650" fill="none" stroke="#081724" stroke-width="3.8" />
+  </g>
+
+  <!-- === RIGHT WING CLUSTER === -->
+  <g id="right-wing-cluster" stroke-linejoin="round">
+    <!-- 8D. Secondary Lower-Outer Spike (Right) -->
+    <polygon points="948,528 820,582 854,616" fill="url(#wingBright)" />
+    <polygon points="948,528 875,642 854,616" fill="#84b3ce" />
+    <polygon points="820,582 765,705 854,616" fill="#78a6c2" />
+    <polygon points="875,642 854,616 765,705" fill="url(#wingDeepNavy)" />
+    <!-- Ridges & Outline -->
+    <polyline points="948,528 854,616 765,705" fill="none" stroke="#ffffff" stroke-width="2" />
+    <line x1="875" y1="642" x2="854" y2="616" stroke="#d4ecf8" stroke-width="1.8" />
+    <polygon points="948,528 820,582 765,705 875,642" fill="none" stroke="#081724" stroke-width="3.8" />
+
+    <!-- 8E. Primary Upper-Outer Wing Spike (Right) -->
+    <!-- Top-Inner Main Facet -->
+    <polygon points="980,355 845,448 892,488" fill="url(#wingBright)" />
+    <polygon points="980,355 908,432 892,488 936,452" fill="#cdeaf8" />
+    <!-- Outer-Right Facet -->
+    <polygon points="980,355 938,520 892,488" fill="#6b9fbb" />
+    <polygon points="980,355 954,458 916,452" fill="#92c2dc" />
+    <!-- Inner-Left Upper Facet -->
+    <polygon points="845,448 798,592 892,488" fill="#8ebcd6" />
+    <polygon points="845,448 824,512 868,514 892,488" fill="#cae7f6" />
+    <!-- Lower-Right Shaded Facet -->
+    <polygon points="938,520 892,488 798,592" fill="url(#wingDeepNavy)" />
+    <polygon points="938,520 904,512 808,586 858,566" fill="#284c64" />
+    <!-- Outer Rim Step Under Main Wing -->
+    <polygon points="845,448 826,458 788,578 798,592" fill="#54809c" stroke="#081724" stroke-width="2.5" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="980,355 892,488 798,592" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="938,520 892,488 845,448" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polygon points="980,355 845,448 798,592 938,520" fill="none" stroke="#081724" stroke-width="4" />
+
+    <!-- 8F. Inner Flank Crystal Gem (Right) -->
+    <polygon points="820,512 705,600 738,610" fill="url(#wingBright)" />
+    <polygon points="820,512 765,650 738,610" fill="#78aac6" />
+    <polygon points="705,600 682,698 738,610" fill="#9eccdf" />
+    <!-- Inner Teal Sub-Triangle -->
+    <polygon points="738,610 702,642 688,688 752,638" fill="#467e9c" />
+    <polygon points="765,650 738,610 682,698" fill="#264b63" opacity="0.7" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="820,512 738,610 682,698" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="765,650 738,610 705,600" fill="none" stroke="#e6f7fd" stroke-width="1.8" />
+    <polygon points="820,512 705,600 682,698 765,650" fill="none" stroke="#081724" stroke-width="3.8" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 9. BOTTOM TAIL CRYSTAL GEM                                              -->
+  <!-- ======================================================================= -->
+  <g id="bottom-tail-gem" stroke-linejoin="round">
+    <!-- Upper-Left Facet -->
+    <polygon points="500,755 438,835 500,828" fill="url(#topGemUL)" />
+    <polygon points="500,755 462,804 484,828 500,828" fill="#ffffff" />
+
+    <!-- Upper-Right Facet -->
+    <polygon points="500,755 562,835 500,828" fill="url(#topGemUR)" />
+    <polygon points="500,755 538,804 516,828 500,828" fill="#d4edf9" />
+
+    <!-- Lower-Left Inner Facet -->
+    <polygon points="455,838 500,828 500,940" fill="url(#topGemLL)" />
+    <polygon points="472,834 500,828 500,925" fill="#f2fbff" />
+
+    <!-- Lower-Right Inner Facet -->
+    <polygon points="545,838 500,828 500,940" fill="url(#topGemLR)" />
+    <polygon points="528,834 500,828 500,925" fill="#88c5e2" />
+
+    <!-- Lower-Left Outer Bevel -->
+    <polygon points="438,835 455,838 500,940 500,965 444,865" fill="#4a748f" />
+    <polygon points="438,835 444,865 472,912 455,838" fill="#7da7c0" />
+
+    <!-- Lower-Right Outer Bevel -->
+    <polygon points="562,835 545,838 500,940 500,965 556,865" fill="#18354a" />
+    <polygon points="545,838 528,885 500,940 500,965" fill="#2e5772" />
+
+    <!-- Specular Ridges & Ink Outline -->
+    <line x1="500" y1="755" x2="500" y2="940" stroke="#ffffff" stroke-width="2.5" />
+    <polyline points="438,835 500,828 562,835" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polyline points="455,838 500,940 545,838" fill="none" stroke="#dcf2fc" stroke-width="1.6" />
+    <polygon points="500,755 562,835 556,865 500,965 444,865 438,835" fill="none" stroke="#081724" stroke-width="4" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 10. FINAL SPECULAR HIGHLIGHTS & CRISP EDGE ACCENTS                      -->
+  <!-- ======================================================================= -->
+  <g id="specular-highlights" fill="none" stroke="#ffffff" stroke-linecap="round">
+    <!-- Frame Inner Rim Highlights -->
+    <line x1="452" y1="228" x2="240" y2="488" stroke-width="2" opacity="0.85" />
+    <line x1="548" y1="228" x2="760" y2="488" stroke-width="2" opacity="0.85" />
+    <line x1="294" y1="494" x2="496" y2="750" stroke-width="1.8" opacity="0.8" />
+    <line x1="706" y1="494" x2="504" y2="750" stroke-width="1.8" opacity="0.8" />
+
+    <!-- Central Diamond Starburst Glints -->
+    <circle cx="500" cy="502" r="4" fill="#ffffff" stroke="none" />
+    <line x1="415" y1="502" x2="585" y2="502" stroke-width="4.5" opacity="0.9" />
+    <line x1="500" y1="395" x2="500" y2="610" stroke-width="4.5" opacity="0.9" />
+  </g>
+</svg>

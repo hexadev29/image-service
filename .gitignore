@@ -1,6 +1,10 @@
 node_modules/
 dist/
 coverage/
-artifacts/*.png
+artifacts/
 .env*
 *.log
+tmp/
+.DS_Store
+**/.DS_Store
+
