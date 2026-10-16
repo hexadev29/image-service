@@ -13,7 +13,7 @@ const clusterWorkers = readPositiveInt(
 );
 const renderWorkerThreads = readPositiveInt(
   process.env.RENDER_WORKER_THREADS,
-  2,
+  1,
 );
 const workerRestartLimit = readPositiveInt(
   process.env.WORKER_RESTART_LIMIT,

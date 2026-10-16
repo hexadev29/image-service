@@ -85,7 +85,7 @@ async function runBenchmark() {
   const WORKER_COUNT = Number(
     process.env.BENCHMARK_WORKER_THREADS ??
       process.env.RENDER_WORKER_THREADS ??
-      2,
+      1,
   );
 
   console.log("================================================================================");

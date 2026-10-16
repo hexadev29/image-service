@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
+import type { RankProfileCardInput, RenderResult } from "../rank-profile/rankProfile.types.js";
 import { RankSvgAssetCache } from "../rank-profile/experiments/rankSvgAssetCache.js";
 import { RenderWorkerPool } from "../rank-profile/RenderWorkerPool.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
@@ -51,11 +51,14 @@ async function runBandwidthTest() {
   const WORKER_COUNT = Number(
     process.env.BENCHMARK_WORKER_THREADS ??
       process.env.RENDER_WORKER_THREADS ??
-      2,
+      1,
   );
 
+  const mode = WORKER_COUNT === 1 ? "SINGLE-THREADED" : `${WORKER_COUNT} THREADS CONCURRENT`;
+
   console.log("================================================================================");
-  console.log(`   BANDWIDTH & THROUGHPUT BENCHMARK: SCALE 1 + CACHED 2x SVG (${TOTAL_IMAGES} IMAGES)`);
+  console.log(`   BANDWIDTH & THROUGHPUT BENCHMARK: SCALE 1 + CACHED 2x SVG [${mode}]`);
+  console.log(`   Workload: ${TOTAL_IMAGES} images | Mode: ${mode}`);
   console.log("================================================================================\n");
 
   await mkdir(ARTIFACTS_DIR, { recursive: true });
@@ -63,42 +66,63 @@ async function runBandwidthTest() {
   const svgCache = new RankSvgAssetCache();
   await svgCache.warmUp("platinum", [60, 48], 2);
 
-  console.log(`Initializing RenderWorkerPool with ${WORKER_COUNT} worker threads...`);
+  console.log(`Initializing RenderWorkerPool with ${WORKER_COUNT} worker thread(s)...`);
   const pool = new RenderWorkerPool(WORKER_COUNT);
 
   // Warm-up renders
-  console.log(`Running warm-up renders across ${WORKER_COUNT} worker threads...`);
+  console.log(`Running warm-up renders across ${WORKER_COUNT} worker thread(s)...`);
   const warmUps: Promise<unknown>[] = [];
-  for (let i = 0; i < WORKER_COUNT * 2; i++) {
+  for (let i = 0; i < Math.max(2, WORKER_COUNT * 2); i++) {
     warmUps.push(pool.render(payload, { config: "B" }));
   }
   await Promise.all(warmUps);
   console.log("Warm-up complete.\n");
 
-  console.log(`Starting 100-image workload on Scale 1 (1200x760) with Cached 2x SVG...`);
+  console.log(
+    `Starting 100-image workload on Scale 1 (1200x760) with Cached 2x SVG (${mode})...`,
+  );
 
   const durations: number[] = [];
   const bufferSizes: number[] = [];
   let peakRss = process.memoryUsage().rss;
+  let sampleResult: RenderResult | null = null;
 
   const tWallStart = performance.now();
   const cpuStart = process.cpuUsage();
 
-  const renderPromises = Array.from({ length: TOTAL_IMAGES }, async () => {
-    const t0 = performance.now();
-    const result = await pool.render(payload, { config: "B" });
-    const elapsed = performance.now() - t0;
+  if (WORKER_COUNT === 1) {
+    // Pure single-threaded sequential workload
+    for (let i = 0; i < TOTAL_IMAGES; i++) {
+      const t0 = performance.now();
+      const result = await pool.render(payload, { config: "B" });
+      const elapsed = performance.now() - t0;
 
-    durations.push(elapsed);
-    bufferSizes.push(result.buffer.length);
+      durations.push(elapsed);
+      bufferSizes.push(result.buffer.length);
 
-    const curRss = process.memoryUsage().rss;
-    if (curRss > peakRss) peakRss = curRss;
+      const curRss = process.memoryUsage().rss;
+      if (curRss > peakRss) peakRss = curRss;
 
-    return result;
-  });
+      if (!sampleResult) sampleResult = result;
+    }
+  } else {
+    // Multi-threaded concurrent workload
+    const renderPromises = Array.from({ length: TOTAL_IMAGES }, async () => {
+      const t0 = performance.now();
+      const result = await pool.render(payload, { config: "B" });
+      const elapsed = performance.now() - t0;
 
-  const results = await Promise.all(renderPromises);
+      durations.push(elapsed);
+      bufferSizes.push(result.buffer.length);
+
+      const curRss = process.memoryUsage().rss;
+      if (curRss > peakRss) peakRss = curRss;
+
+      if (!sampleResult) sampleResult = result;
+      return result;
+    });
+    await Promise.all(renderPromises);
+  }
 
   const wallElapsedMs = performance.now() - tWallStart;
   const cpuElapsed = process.cpuUsage(cpuStart);
@@ -129,10 +153,10 @@ async function runBandwidthTest() {
   const latency = calculateLatencyStats(durations);
 
   // Save representative output artifact
-  if (results[0]) {
+  if (sampleResult) {
     await writeFile(
       join(ARTIFACTS_DIR, "scale1-svg-bandwidth-sample.png"),
-      Buffer.from(results[0].buffer),
+      Buffer.from((sampleResult as RenderResult).buffer),
     );
   }
 
@@ -140,6 +164,7 @@ async function runBandwidthTest() {
   const reportData = {
     timestamp: new Date().toISOString(),
     configuration: "Scale 1 Canvas (1200x760) + Cached 2x Platinum SVG",
+    mode,
     totalImages: TOTAL_IMAGES,
     workerThreads: WORKER_COUNT,
     bandwidth: {
@@ -169,7 +194,7 @@ async function runBandwidthTest() {
   await writeFile(resultsJsonPath, JSON.stringify(reportData, null, 2));
 
   console.log("======================================================================================================");
-  console.log(`   FINAL BANDWIDTH & THROUGHPUT REPORT (${TOTAL_IMAGES} IMAGES, ${WORKER_COUNT} WORKER THREADS)`);
+  console.log(`   FINAL BANDWIDTH & THROUGHPUT REPORT (${TOTAL_IMAGES} IMAGES, ${mode})`);
   console.log("======================================================================================================");
   console.log("DATA VOLUME & BANDWIDTH:");
   console.log(`  - Total Data Generated:        ${totalMB.toFixed(2)} MB (${totalKB.toFixed(1)} KB) for ${TOTAL_IMAGES} images`);
@@ -178,6 +203,7 @@ async function runBandwidthTest() {
   console.log(`  - Bandwidth Saved vs Scale 2:  -${bandwidthSavedPercent}% (~${bandwidthSavedMB.toFixed(1)} MB saved per 100 images!)`);
   console.log("------------------------------------------------------------------------------------------------------");
   console.log("EXECUTION SPEED & THROUGHPUT:");
+  console.log(`  - Execution Mode:              ${mode}`);
   console.log(`  - Total Batch Wall-Clock:      ${wallElapsedMs.toFixed(1)} ms (${wallSec.toFixed(2)} seconds)`);
   console.log(`  - Render Throughput:           ${throughputRps} images/second`);
   console.log(`  - Average Latency (per img):   ${latency.avgMs} ms`);
