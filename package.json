@@ -9,7 +9,7 @@
     "test": "vitest run",
     "render:sample": "tsx src/scripts/render-rank-profile-sample.ts",
     "render:compare": "tsx src/scripts/render-comparison-samples.ts",
-    "benchmark:rank-svg": "tsx src/scripts/benchmark-rank-svg.ts"
+    "benchmark:rank-svg": "npm run build && tsx src/scripts/benchmark-rank-svg.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.78",

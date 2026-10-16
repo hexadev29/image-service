@@ -4,11 +4,8 @@ import sharp from "sharp";
 import { createCanvas } from "@napi-rs/canvas";
 
 import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
-import {
-  RankSvgAssetCache,
-  createScale2SvgRenderer,
-  createExperimentalCandidateRenderer,
-} from "../rank-profile/experiments/rankSvgAssetCache.js";
+import { RankSvgAssetCache } from "../rank-profile/experiments/rankSvgAssetCache.js";
+import { RenderWorkerPool } from "../rank-profile/RenderWorkerPool.js";
 
 const OUT_DIR = join(process.cwd(), "tmp", "rank-svg-experiment");
 
@@ -85,8 +82,14 @@ function calculateTimingStats(durations: number[]): TimingStats {
 }
 
 async function runBenchmark() {
+  const WORKER_COUNT = Number(
+    process.env.BENCHMARK_WORKER_THREADS ??
+      process.env.RENDER_WORKER_THREADS ??
+      2,
+  );
+
   console.log("================================================================================");
-  console.log("   BENCHMARK: CONFIGURATION A (Scale 2 + SVG) vs CONFIGURATION B (Scale 1 + SVG)");
+  console.log(`   BENCHMARK: CONFIG A (Scale 2 + SVG) vs CONFIG B (Scale 1 + SVG) [${WORKER_COUNT} THREADS]`);
   console.log("================================================================================\n");
 
   await mkdir(OUT_DIR, { recursive: true });
@@ -117,21 +120,26 @@ async function runBenchmark() {
   console.log(`  Cache warm-up finished in: ${warmUpDurationMs.toFixed(2)} ms`);
   console.log(`  Pre-cached items: ${initialCacheStats.cachedItems.join(", ")}`);
 
-  // Both configurations use the SAME cached SVG asset, isolating canvas scale as the single independent variable
-  const rendererA = createScale2SvgRenderer(svgCache, 4); // Config A: Scale 2 Canvas + Cached SVG
-  const rendererB = createExperimentalCandidateRenderer(svgCache); // Config B: Scale 1 Canvas + Cached SVG at 2x
+  console.log(
+    `\nInitializing RenderWorkerPool with ${WORKER_COUNT} concurrent worker threads...`,
+  );
+  const pool = new RenderWorkerPool(WORKER_COUNT);
 
-  // Warm-up renders (10 iterations per config)
-  console.log("\n[2/4] Running 10 warm-up renders per configuration...");
-  for (let i = 0; i < 10; i++) {
-    await rendererA.render(benchmarkPayload);
-    await rendererB.render(benchmarkPayload);
+  // Warm-up renders across worker threads
+  console.log(`\n[2/4] Running warm-up renders across ${WORKER_COUNT} worker threads...`);
+  const warmUpPromises: Promise<unknown>[] = [];
+  for (let i = 0; i < WORKER_COUNT * 2; i++) {
+    warmUpPromises.push(pool.render(benchmarkPayload, { config: "A" }));
+    warmUpPromises.push(pool.render(benchmarkPayload, { config: "B" }));
   }
+  await Promise.all(warmUpPromises);
   console.log("  Warm-up completed.");
 
   // Timed workload: 100 identical images for each configuration
   const TOTAL_RENDERS = 100;
-  console.log(`\n[3/4] Running 100 renders per configuration under identical workload...`);
+  console.log(
+    `\n[3/4] Running 100 renders per configuration across ${WORKER_COUNT} worker threads...`,
+  );
 
   const durationsA: number[] = [];
   const durationsB: number[] = [];
@@ -141,34 +149,60 @@ async function runBenchmark() {
   let peakRssBytes = process.memoryUsage().rss;
 
   // Render Configuration A (Scale 2 + SVG)
-  console.log("  Rendering Configuration A (Scale 2 + SVG, 100 images)...");
+  console.log(
+    `  Rendering Configuration A (Scale 2 + SVG, 100 images, concurrency: ${WORKER_COUNT})...`,
+  );
+  const tWallStartA = performance.now();
   const cpuStartA = process.cpuUsage();
-  for (let i = 0; i < TOTAL_RENDERS; i++) {
+
+  const promisesA = Array.from({ length: TOTAL_RENDERS }, async () => {
     const t0 = performance.now();
-    const res = await rendererA.render(benchmarkPayload);
+    const res = await pool.render(benchmarkPayload, { config: "A" });
     const d = performance.now() - t0;
     durationsA.push(d);
     if (!sampleBufferA) sampleBufferA = Buffer.from(res.buffer);
     const rss = process.memoryUsage().rss;
     if (rss > peakRssBytes) peakRssBytes = rss;
-  }
+    return res;
+  });
+
+  await Promise.all(promisesA);
+  const wallElapsedA = performance.now() - tWallStartA;
   const cpuElapsedA = process.cpuUsage(cpuStartA);
   const cpuMsA = (cpuElapsedA.user + cpuElapsedA.system) / 1000;
+  const throughputA = Number((TOTAL_RENDERS / (wallElapsedA / 1000)).toFixed(1));
+  console.log(
+    `    Finished Config A in ${wallElapsedA.toFixed(1)} ms (${throughputA} renders/sec across ${WORKER_COUNT} threads)`,
+  );
 
   // Render Configuration B (Scale 1 + SVG at 2x)
-  console.log("  Rendering Configuration B (Scale 1 + SVG at 2x, 100 images)...");
+  console.log(
+    `  Rendering Configuration B (Scale 1 + SVG at 2x, 100 images, concurrency: ${WORKER_COUNT})...`,
+  );
+  const tWallStartB = performance.now();
   const cpuStartB = process.cpuUsage();
-  for (let i = 0; i < TOTAL_RENDERS; i++) {
+
+  const promisesB = Array.from({ length: TOTAL_RENDERS }, async () => {
     const t0 = performance.now();
-    const res = await rendererB.render(benchmarkPayload);
+    const res = await pool.render(benchmarkPayload, { config: "B" });
     const d = performance.now() - t0;
     durationsB.push(d);
     if (!sampleBufferB) sampleBufferB = Buffer.from(res.buffer);
     const rss = process.memoryUsage().rss;
     if (rss > peakRssBytes) peakRssBytes = rss;
-  }
+    return res;
+  });
+
+  await Promise.all(promisesB);
+  const wallElapsedB = performance.now() - tWallStartB;
   const cpuElapsedB = process.cpuUsage(cpuStartB);
   const cpuMsB = (cpuElapsedB.user + cpuElapsedB.system) / 1000;
+  const throughputB = Number((TOTAL_RENDERS / (wallElapsedB / 1000)).toFixed(1));
+  console.log(
+    `    Finished Config B in ${wallElapsedB.toFixed(1)} ms (${throughputB} renders/sec across ${WORKER_COUNT} threads)`,
+  );
+
+  await pool.close();
 
   const statsA = calculateTimingStats(durationsA);
   const statsB = calculateTimingStats(durationsB);
@@ -326,7 +360,7 @@ async function runBenchmark() {
       diffBuffer[i + 2] = 128;
       diffBuffer[i + 3] = 255;
     } else {
-      const gray = Math.round((rawB[i] + rawB[i + 1] + rawB[i + 2]) / 3 * 0.3);
+      const gray = Math.round(((rawB[i] + rawB[i + 1] + rawB[i + 2]) / 3) * 0.3);
       diffBuffer[i] = gray;
       diffBuffer[i + 1] = gray;
       diffBuffer[i + 2] = gray;
@@ -347,6 +381,7 @@ async function runBenchmark() {
     metadata: {
       timestamp: new Date().toISOString(),
       workloadRenders: TOTAL_RENDERS,
+      workerThreads: WORKER_COUNT,
       platform: process.platform,
       arch: process.arch,
       nodeVersion: process.version,
@@ -364,6 +399,8 @@ async function runBenchmark() {
       pngOutputBytes: sizeA,
       pngOutputKB: Number((sizeA / 1024).toFixed(1)),
       timing: statsA,
+      wallClockElapsedMs: Number(wallElapsedA.toFixed(2)),
+      throughputRps: throughputA,
       totalCpuMs: Number(cpuMsA.toFixed(2)),
       avgCpuPerRenderMs: Number((cpuMsA / TOTAL_RENDERS).toFixed(2)),
     },
@@ -374,14 +411,24 @@ async function runBenchmark() {
       pngOutputBytes: sizeB,
       pngOutputKB: Number((sizeB / 1024).toFixed(1)),
       timing: statsB,
+      wallClockElapsedMs: Number(wallElapsedB.toFixed(2)),
+      throughputRps: throughputB,
       totalCpuMs: Number(cpuMsB.toFixed(2)),
       avgCpuPerRenderMs: Number((cpuMsB / TOTAL_RENDERS).toFixed(2)),
     },
     comparison: {
+      workerThreads: WORKER_COUNT,
       pixelReductionPercent: 75.0,
       renderSpeedupFactor: Number((statsA.avgMs / statsB.avgMs).toFixed(2)),
       renderTimeReductionPercent: Number(
         (((statsA.avgMs - statsB.avgMs) / statsA.avgMs) * 100).toFixed(1),
+      ),
+      wallClockSpeedupFactor: Number((wallElapsedA / wallElapsedB).toFixed(2)),
+      wallClockReductionPercent: Number(
+        (((wallElapsedA - wallElapsedB) / wallElapsedA) * 100).toFixed(1),
+      ),
+      throughputIncreasePercent: Number(
+        (((throughputB - throughputA) / throughputA) * 100).toFixed(1),
       ),
       cpuReductionPercent: Number((((cpuMsA - cpuMsB) / cpuMsA) * 100).toFixed(1)),
       fileSizeReductionPercent: Number((((sizeA - sizeB) / sizeA) * 100).toFixed(1)),
@@ -410,17 +457,24 @@ async function runBenchmark() {
 
   // Console Summary
   console.log("\n======================================================================================================");
-  console.log("   BENCHMARK RESULTS: CONFIGURATION A vs CONFIGURATION B (100 RENDERS EACH)");
+  console.log(`   BENCHMARK RESULTS: CONFIG A vs CONFIG B (100 RENDERS EACH, ${WORKER_COUNT} WORKER THREADS)`);
   console.log("======================================================================================================");
   console.log("METRIC                       CONFIG A (Scale 2 + SVG)    CONFIG B (Scale 1 + 2x SVG) DELTA (B vs A)");
   console.log("------------------------------------------------------------------------------------------------------");
+  console.log(`Worker Threads               ${WORKER_COUNT} threads active              ${WORKER_COUNT} threads active              Parallel execution`);
   console.log(`Canvas Resolution            2400 x 1520                 1200 x 760                  -75.0% pixels`);
   console.log(`Total Canvas Pixels          3,648,000 pixels            912,000 pixels              -2,736,000 pixels`);
   console.log(
     `Output PNG File Size         ${(sizeA / 1024).toFixed(1)} KB                     ${(sizeB / 1024).toFixed(1)} KB                     -${resultsData.comparison.fileSizeReductionPercent}%`,
   );
   console.log(
-    `Average Render Time          ${statsA.avgMs} ms                     ${statsB.avgMs} ms                     -${resultsData.comparison.renderTimeReductionPercent}% (${resultsData.comparison.renderSpeedupFactor}x faster)`,
+    `Batch Wall-Clock Time        ${wallElapsedA.toFixed(1)} ms                 ${wallElapsedB.toFixed(1)} ms                 -${resultsData.comparison.wallClockReductionPercent}% (${resultsData.comparison.wallClockSpeedupFactor}x faster)`,
+  );
+  console.log(
+    `Batch Throughput             ${throughputA} renders/sec             ${throughputB} renders/sec             +${resultsData.comparison.throughputIncreasePercent}% throughput`,
+  );
+  console.log(
+    `Average Render Time (per img)${statsA.avgMs} ms                     ${statsB.avgMs} ms                     -${resultsData.comparison.renderTimeReductionPercent}% (${resultsData.comparison.renderSpeedupFactor}x faster)`,
   );
   console.log(
     `Median Render Time           ${statsA.medianMs} ms                     ${statsB.medianMs} ms                     -${(

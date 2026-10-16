@@ -1,11 +1,17 @@
 import { availableParallelism } from "node:os";
 import { Worker } from "node:worker_threads";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
 
 import type { RenderService } from "../app.js";
 import type {
   RankProfileCardInput,
   RenderResult,
 } from "./rankProfile.types.js";
+import type { RenderWorkerOptions } from "./renderWorker.js";
+
+export type { RenderWorkerOptions };
 
 interface WorkerMessage {
   id: number;
@@ -22,6 +28,7 @@ interface WorkerMessage {
 interface RenderJob {
   id: number;
   input: RankProfileCardInput;
+  options?: RenderWorkerOptions;
   resolve: (result: RenderResult) => void;
   reject: (error: unknown) => void;
 }
@@ -29,6 +36,29 @@ interface RenderJob {
 interface WorkerSlot {
   worker: Worker;
   current?: RenderJob;
+}
+
+export function getRenderWorkerUrl(): URL {
+  const localJs = new URL("./renderWorker.js", import.meta.url);
+  if (existsSync(fileURLToPath(localJs))) {
+    return localJs;
+  }
+  const distJs = new URL(
+    "../../dist/rank-profile/renderWorker.js",
+    import.meta.url,
+  );
+  if (existsSync(fileURLToPath(distJs))) {
+    return distJs;
+  }
+  try {
+    execSync("npm run build", { stdio: "ignore" });
+    if (existsSync(fileURLToPath(distJs))) {
+      return distJs;
+    }
+  } catch {
+    // Ignore build error and fallback
+  }
+  return localJs;
 }
 
 export class RenderWorkerPool implements RenderService {
@@ -45,7 +75,14 @@ export class RenderWorkerPool implements RenderService {
     }
   }
 
-  render(input: RankProfileCardInput): Promise<RenderResult> {
+  get size(): number {
+    return this.workers.length;
+  }
+
+  render(
+    input: RankProfileCardInput,
+    options?: RenderWorkerOptions,
+  ): Promise<RenderResult> {
     if (this.closed) {
       return Promise.reject(new Error("Render worker pool is closed"));
     }
@@ -54,6 +91,7 @@ export class RenderWorkerPool implements RenderService {
       this.queue.push({
         id: this.nextJobId,
         input,
+        options,
         resolve,
         reject,
       });
@@ -76,7 +114,7 @@ export class RenderWorkerPool implements RenderService {
 
   private createWorkerSlot(): WorkerSlot {
     const slot: WorkerSlot = {
-      worker: new Worker(new URL("./renderWorker.js", import.meta.url), {
+      worker: new Worker(getRenderWorkerUrl(), {
         name: "rank-profile-renderer",
       }),
     };
@@ -137,7 +175,11 @@ export class RenderWorkerPool implements RenderService {
       if (!job) return;
 
       slot.current = job;
-      slot.worker.postMessage({ id: job.id, input: job.input });
+      slot.worker.postMessage({
+        id: job.id,
+        input: job.input,
+        options: job.options,
+      });
     }
   }
 }
