@@ -6,7 +6,7 @@ COPY . .
 RUN npm run build
 FROM node:22-bookworm-slim
 WORKDIR /app
-ENV NODE_ENV=production PORT=3000
+ENV NODE_ENV=production PORT=3000 RENDER_WORKER_THREADS=2
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
