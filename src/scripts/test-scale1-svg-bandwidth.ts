@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import type { RankProfileCardInput, RenderResult } from "../rank-profile/rankProfile.types.js";
-import { RankSvgAssetCache } from "../rank-profile/experiments/rankSvgAssetCache.js";
+
 import { RenderWorkerPool } from "../rank-profile/RenderWorkerPool.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
 
@@ -63,20 +63,8 @@ async function runBandwidthTest() {
 
   await mkdir(ARTIFACTS_DIR, { recursive: true });
 
-  const svgCache = new RankSvgAssetCache();
-  await svgCache.warmUp("platinum", [60, 48], 2);
-
   console.log(`Initializing RenderWorkerPool with ${WORKER_COUNT} worker thread(s)...`);
   const pool = new RenderWorkerPool(WORKER_COUNT);
-
-  // Warm-up renders
-  console.log(`Running warm-up renders across ${WORKER_COUNT} worker thread(s)...`);
-  const warmUps: Promise<unknown>[] = [];
-  for (let i = 0; i < Math.max(2, WORKER_COUNT * 2); i++) {
-    warmUps.push(pool.render(payload, { config: "B" }));
-  }
-  await Promise.all(warmUps);
-  console.log("Warm-up complete.\n");
 
   console.log(
     `Starting 100-image workload on Scale 1 (1200x760) with Cached 2x SVG (${mode})...`,

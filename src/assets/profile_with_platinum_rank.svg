@@ -1,0 +1,1090 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 835" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap');
+      .font-main {
+        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      .title-dark {
+        fill: #0B1528;
+        font-weight: 700;
+      }
+      .stat-num {
+        fill: #0E1726;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .section-header {
+        fill: #1A5096;
+        font-size: 14.5px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+      }
+      .sub-header {
+        fill: #1A5096;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+      .label-blue {
+        fill: #1A5096;
+        font-size: 13.5px;
+        font-weight: 500;
+      }
+      .chart-text {
+        fill: #0F3C78;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    </style>
+
+    <!-- Main Outer Card Drop Shadow -->
+    <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#0B1528" flood-opacity="0.08" />
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0B1528" flood-opacity="0.04" />
+    </filter>
+
+    <!-- Subtle Inner Panel Shadow -->
+    <filter id="panel-shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#0F2942" flood-opacity="0.03" />
+    </filter>
+
+    <!-- Bar Gradients -->
+    <linearGradient id="bar-lavender" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D2C4FF" />
+      <stop offset="100%" stop-color="#E5DCFF" />
+    </linearGradient>
+
+    <linearGradient id="bar-active" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9B6BFF" />
+      <stop offset="100%" stop-color="#6930FF" />
+    </linearGradient>
+
+    <linearGradient id="leaderboard-bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D5C8FF" stop-opacity="0.85" />
+      <stop offset="75%" stop-color="#E6DEFF" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Trophy Gradients -->
+    <linearGradient id="trophy-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD43B" />
+      <stop offset="50%" stop-color="#FFAA00" />
+      <stop offset="100%" stop-color="#F08C00" />
+    </linearGradient>
+    <linearGradient id="trophy-base" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F59F00" />
+      <stop offset="50%" stop-color="#FFD43B" />
+      <stop offset="100%" stop-color="#E67700" />
+    </linearGradient>
+
+    <!-- Progress Bar Gradient -->
+    <linearGradient id="progress-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7E42FF" />
+      <stop offset="100%" stop-color="#702DFF" />
+    </linearGradient>
+
+    <!-- Avatar Clip Path & Gradients -->
+    <clipPath id="avatar-clip">
+      <circle cx="132" cy="184" r="83.5" />
+    </clipPath>
+
+    <linearGradient id="bg-wall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A39B8B" />
+      <stop offset="50%" stop-color="#CEC6B6" />
+      <stop offset="100%" stop-color="#7A756C" />
+    </linearGradient>
+
+    <linearGradient id="skin-tone" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#F4C9A8" />
+      <stop offset="55%" stop-color="#CFA07E" />
+      <stop offset="100%" stop-color="#8D6346" />
+    </linearGradient>
+
+    <linearGradient id="suit-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2B323B" />
+      <stop offset="100%" stop-color="#12161F" />
+    </linearGradient>
+  </defs>
+
+  <g class="font-main">
+    <!-- Main Outer White Card -->
+    <rect x="20" y="30" width="1160" height="772" rx="36" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" filter="url(#card-shadow)" />
+
+    <!-- ==================== TOP LEFT: PROFILE SECTION ==================== -->
+    <!-- Outer Lavender Ring -->
+    <circle cx="132" cy="184" r="95" fill="none" stroke="#D5CAFF" stroke-width="6" />
+    <circle cx="132" cy="184" r="88" fill="#FFFFFF" />
+
+    <!-- Stylized Vector Portrait inside Avatar Clip -->
+    <g clip-path="url(#avatar-clip)">
+      <!-- Textured Cobblestone/Brick Background -->
+      <rect x="45" y="95" width="175" height="175" fill="url(#bg-wall)" />
+      <!-- Subtle perspective brick grid lines -->
+      <g stroke="#68635B" stroke-width="1" opacity="0.35" fill="none">
+        <path d="M40 120 L220 95 M40 140 L220 115 M40 160 L220 135 M40 180 L220 155 M40 200 L220 175 M40 220 L220 195 M40 240 L220 215 M40 260 L220 235" />
+        <path d="M65 95 L45 270 M95 95 L75 270 M125 95 L105 270 M155 95 L135 270 M185 95 L165 270 M215 95 L195 270" />
+      </g>
+      <!-- Warm sunlight glow on top-left -->
+      <circle cx="65" cy="115" r="45" fill="#FFF3D1" opacity="0.45" />
+
+      <!-- Dark background diagonal accent behind head -->
+      <path d="M168 100 L185 100 L165 155 L155 150 Z" fill="#2A2421" />
+
+      <!-- Suit Shoulders & Torso -->
+      <path d="M52 272 C56 236, 78 218, 98 210 L165 225 C182 232, 198 248, 204 272 Z" fill="url(#suit-grad)" />
+      <!-- Outer Suit Lapels -->
+      <path d="M82 215 L114 268 L95 270 L70 228 Z" fill="#1E242B" />
+      <path d="M162 222 L134 268 L152 270 L175 235 Z" fill="#181C22" />
+
+      <!-- Crisp White Dress Shirt & Collar -->
+      <path d="M98 208 L124 268 L148 268 L155 218 Z" fill="#DCE5EC" />
+      <path d="M96 205 L125 238 L108 248 L88 216 Z" fill="#F8FAFC" />
+      <path d="M154 212 L132 238 L146 246 L160 222 Z" fill="#CBD5E1" />
+
+      <!-- Dark Necktie -->
+      <path d="M123 235 L134 236 L138 246 L126 247 Z" fill="#0F141C" />
+      <path d="M126 246 L137 245 L142 272 L121 272 Z" fill="#161D26" />
+
+      <!-- Neck & Chin Shadow -->
+      <path d="M100 192 L102 222 L130 236 L148 215 L145 195 Z" fill="#9E7052" />
+      <path d="M106 202 C115 215, 135 218, 146 206 L142 224 L126 236 L105 218 Z" fill="#6F4B34" opacity="0.7" />
+
+      <!-- Right Ear (viewer's left) -->
+      <path d="M88 164 C81 162, 78 174, 83 185 C86 192, 93 194, 96 190 Z" fill="#DFAF8C" />
+      <path d="M85 170 C83 174, 85 182, 90 185" stroke="#9E6B4B" stroke-width="2" fill="none" />
+
+      <!-- Face Base Shape -->
+      <path d="M94 136 C92 162, 95 190, 110 206 C122 218, 138 220, 150 210 C162 198, 168 175, 166 146 Z" fill="url(#skin-tone)" />
+
+      <!-- Facial Shading & Cheekbone Highlight -->
+      <path d="M112 178 C122 172, 135 176, 138 190 C134 202, 118 202, 112 178 Z" fill="#FBE0C6" opacity="0.45" />
+      <!-- Nose Bridge & Shadow -->
+      <path d="M148 175 L154 193 L143 197 L142 178 Z" fill="#7D543B" opacity="0.65" />
+      <path d="M145 172 L152 191 L147 193" stroke="#F7D4B6" stroke-width="2" fill="none" opacity="0.7" />
+
+      <!-- Lips / Mouth -->
+      <path d="M132 205 C138 205, 145 204, 149 202" stroke="#633F2B" stroke-width="2.2" stroke-linecap="round" fill="none" />
+      <path d="M136 208 C140 209, 145 208, 147 206" stroke="#A67558" stroke-width="1.5" stroke-linecap="round" fill="none" />
+
+      <!-- Eyebrows -->
+      <path d="M115 166 C125 165, 136 168, 143 172" stroke="#231B18" stroke-width="3.2" stroke-linecap="round" fill="none" />
+      <path d="M152 171 C157 170, 162 169, 165 166" stroke="#231B18" stroke-width="2.8" stroke-linecap="round" fill="none" />
+
+      <!-- Sleek Black Sunglasses -->
+      <!-- Temple arm -->
+      <path d="M90 163 L118 176" stroke="#111317" stroke-width="4" stroke-linecap="round" />
+      <!-- Left lens (viewer's left) -->
+      <path d="M116 173 C124 171, 139 174, 144 179 C145 186, 138 192, 127 190 C118 188, 114 180, 116 173 Z" fill="#0B0D10" stroke="#1F242B" stroke-width="1.5" />
+      <!-- Right lens (viewer's right) -->
+      <path d="M150 178 C156 175, 166 174, 169 178 C170 184, 165 190, 157 190 C151 189, 149 183, 150 178 Z" fill="#0B0D10" stroke="#1F242B" stroke-width="1.5" />
+      <!-- Bridge -->
+      <path d="M143 179 C146 178, 149 178, 151 179" stroke="#22262E" stroke-width="2.5" fill="none" />
+      <!-- Lens Glint -->
+      <path d="M121 176 L132 178" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.4" />
+      <path d="M154 179 L162 179" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.4" />
+
+      <!-- Stylized Dark Hair (Layered Anime Locks) -->
+      <path d="M84 162 C78 138, 88 112, 112 104 C136 96, 164 106, 174 128 C180 142, 176 160, 170 168 C168 154, 164 145, 158 148 C154 156, 150 162, 146 154 C142 146, 135 152, 130 160 C128 150, 120 145, 114 156 C108 148, 100 152, 96 168 Z" fill="#1B1615" />
+      <!-- Hair Highlights & Texture -->
+      <path d="M98 118 C115 106, 142 108, 158 122 C145 118, 120 116, 98 118 Z" fill="#3B2E2A" opacity="0.7" />
+      <path d="M106 132 C120 125, 140 128, 154 138" stroke="#382C28" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6" />
+    </g>
+
+    <!-- Inner Avatar Border Ring -->
+    <circle cx="132" cy="184" r="83.5" fill="none" stroke="#E2E8F0" stroke-width="1" />
+
+    <!-- ==================== USER NAME, RANK ICON & BIO ==================== -->
+    <text x="252" y="139" font-size="44" class="title-dark" letter-spacing="-0.02em">Sakha</text>
+
+<!-- Uploaded platinum rank SVG embedded at the original rank-icon position -->
+    <g transform="translate(414, 123)">
+      <svg x="-20" y="-20" width="40" height="40" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+    <!-- ==================== OUTER FRAME & BEVEL GRADIENTS ==================== -->
+    <linearGradient id="frameTopLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d2e6f2" />
+      <stop offset="45%" stop-color="#f7fcff" />
+      <stop offset="85%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#c3ddec" />
+    </linearGradient>
+
+    <linearGradient id="frameTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="35%" stop-color="#eef8fd" />
+      <stop offset="75%" stop-color="#d5e9f5" />
+      <stop offset="100%" stop-color="#b8d4e5" />
+    </linearGradient>
+
+    <linearGradient id="innerBandTopLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78b1cd" />
+      <stop offset="28%" stop-color="#b7dfef" />
+      <stop offset="65%" stop-color="#eef9fe" />
+      <stop offset="100%" stop-color="#d0eaf7" />
+    </linearGradient>
+
+    <linearGradient id="innerBandTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8ec2db" />
+      <stop offset="35%" stop-color="#cde9f6" />
+      <stop offset="70%" stop-color="#f7fdff" />
+      <stop offset="100%" stop-color="#bce0f2" />
+    </linearGradient>
+
+    <linearGradient id="innerBandBotLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#96c3dc" />
+      <stop offset="50%" stop-color="#7aa9c4" />
+      <stop offset="100%" stop-color="#b6d9ec" />
+    </linearGradient>
+
+    <linearGradient id="innerBandBotRight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c2e2f2" />
+      <stop offset="50%" stop-color="#9fc9e0" />
+      <stop offset="100%" stop-color="#e2f4fc" />
+    </linearGradient>
+
+    <linearGradient id="bezelTopLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#44738f" />
+      <stop offset="50%" stop-color="#75aecb" />
+      <stop offset="100%" stop-color="#4e829f" />
+    </linearGradient>
+
+    <linearGradient id="bezelTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#487c99" />
+      <stop offset="55%" stop-color="#6da7c6" />
+      <stop offset="100%" stop-color="#35637f" />
+    </linearGradient>
+
+    <linearGradient id="bezelBotLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173e54" />
+      <stop offset="50%" stop-color="#387f9f" />
+      <stop offset="100%" stop-color="#58a6c4" />
+    </linearGradient>
+
+    <linearGradient id="bezelBotRight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#163b50" />
+      <stop offset="50%" stop-color="#1e4d68" />
+      <stop offset="100%" stop-color="#0d2638" />
+    </linearGradient>
+
+    <!-- ==================== CENTRAL DIAMOND GRADIENTS ==================== -->
+    <linearGradient id="coreTL" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="55%" stop-color="#e5f6fd" />
+      <stop offset="100%" stop-color="#aeddf2" />
+    </linearGradient>
+
+    <linearGradient id="coreTR" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c8ecfa" />
+      <stop offset="50%" stop-color="#9ad8f0" />
+      <stop offset="100%" stop-color="#6fc1e2" />
+    </linearGradient>
+
+    <linearGradient id="coreBL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#75c2e0" />
+      <stop offset="48%" stop-color="#b5e5f6" />
+      <stop offset="75%" stop-color="#eefaff" />
+      <stop offset="100%" stop-color="#c3e9f8" />
+    </linearGradient>
+
+    <linearGradient id="coreBR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#48a5cb" />
+      <stop offset="45%" stop-color="#63b8da" />
+      <stop offset="80%" stop-color="#90d2ec" />
+      <stop offset="100%" stop-color="#cdeefb" />
+    </linearGradient>
+
+    <!-- ==================== TOP & BOTTOM GEM GRADIENTS ==================== -->
+    <linearGradient id="topGemUL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#ebf8fe" />
+      <stop offset="100%" stop-color="#c6e5f5" />
+    </linearGradient>
+
+    <linearGradient id="topGemUR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d8effa" />
+      <stop offset="55%" stop-color="#9ec7de" />
+      <stop offset="100%" stop-color="#76a8c4" />
+    </linearGradient>
+
+    <linearGradient id="topGemLL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bce2f4" />
+      <stop offset="60%" stop-color="#e3f5fd" />
+      <stop offset="100%" stop-color="#9ac8e0" />
+    </linearGradient>
+
+    <linearGradient id="topGemLR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#498db2" />
+      <stop offset="60%" stop-color="#6fa9c9" />
+      <stop offset="100%" stop-color="#2f6382" />
+    </linearGradient>
+
+    <!-- ==================== WING & CHEVRON GRADIENTS ==================== -->
+    <linearGradient id="wingBright" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#e1f3fc" />
+      <stop offset="100%" stop-color="#b5daec" />
+    </linearGradient>
+
+    <linearGradient id="wingMidBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cce8f6" />
+      <stop offset="50%" stop-color="#94c1da" />
+      <stop offset="100%" stop-color="#699ab7" />
+    </linearGradient>
+
+    <linearGradient id="wingDarkSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6a98b5" />
+      <stop offset="55%" stop-color="#426d89" />
+      <stop offset="100%" stop-color="#214056" />
+    </linearGradient>
+
+    <linearGradient id="wingDeepNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3c647e" />
+      <stop offset="50%" stop-color="#224259" />
+      <stop offset="100%" stop-color="#102536" />
+    </linearGradient>
+
+    <linearGradient id="chevronSilverL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8bb6cf" />
+      <stop offset="40%" stop-color="#e3f4fc" />
+      <stop offset="80%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#b5d8ea" />
+    </linearGradient>
+
+    <linearGradient id="chevronSilverR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8bb6cf" />
+      <stop offset="40%" stop-color="#e3f4fc" />
+      <stop offset="80%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#b5d8ea" />
+    </linearGradient>
+  </defs>
+
+  <!-- ======================================================================= -->
+  <!-- 1. BASE SILHOUETTE / DARK INK BACKING                                   -->
+  <!-- ======================================================================= -->
+  <path d="M 500 36
+           L 576 165 L 571 176 L 824 491 L 803 558 L 821 511
+           L 845 447 L 981 353 L 939 521 L 916 544 L 949 527
+           L 876 643 L 774 699 L 743 736 L 662 766 L 563 836
+           L 557 866 L 500 966 L 443 866 L 437 836 L 338 766
+           L 257 736 L 226 699 L 124 643 L 51 527 L 84 544
+           L 61 521 L 19 353 L 155 447 L 179 511 L 197 558
+           L 176 491 L 429 176 L 424 165 Z" fill="#0b1d2c" stroke="#07131e" stroke-width="6" stroke-linejoin="round" />
+
+  <!-- ======================================================================= -->
+  <!-- 2. OUTER DIAMOND FRAME & RECESSED CHANNELS                              -->
+  <!-- ======================================================================= -->
+  <g id="outer-diamond-frame" stroke-linejoin="round">
+    <!-- Left Upper Outer Rim -->
+    <polygon points="430,176 178,492 218,492 446,210" fill="url(#frameTopLeft)" stroke="#0d2334" stroke-width="3" />
+    <!-- Top-Left Rim Shadow Patch near Gem -->
+    <polygon points="430,176 402,211 422,240 446,210" fill="#89afc6" />
+    <polygon points="402,211 372,248 394,274 422,240" fill="#bfdbea" />
+    <!-- Left Outer Corner Bevel -->
+    <polygon points="178,492 218,492 236,574 198,558" fill="#50728a" stroke="#0d2334" stroke-width="3" />
+    <polygon points="178,492 198,558 214,548 195,492" fill="#7da1b9" />
+    <polygon points="218,492 236,574 222,566 206,492" fill="#29465b" />
+
+    <!-- Right Upper Outer Rim -->
+    <polygon points="570,176 822,492 782,492 554,210" fill="url(#frameTopRight)" stroke="#0d2334" stroke-width="3" />
+    <!-- Top-Right Rim Shadow Patch near Gem -->
+    <polygon points="570,176 598,211 578,240 554,210" fill="#9ec0d5" />
+    <polygon points="695,333 742,392 722,416 675,357" fill="#d9edf8" />
+    <!-- Right Outer Corner Bevel -->
+    <polygon points="822,492 782,492 764,574 802,558" fill="#496b82" stroke="#0d2334" stroke-width="3" />
+    <polygon points="822,492 802,558 786,548 805,492" fill="#315066" />
+    <polygon points="782,492 764,574 778,566 794,492" fill="#6b90a8" />
+
+    <!-- Deep Recessed Dark Frame Groove -->
+    <polygon points="446,210 218,492 236,492 455,224" fill="#10293b" stroke="#091a28" stroke-width="2" />
+    <polygon points="554,210 782,492 764,492 545,224" fill="#10293b" stroke="#091a28" stroke-width="2" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 3. INNER CRYSTALLINE FRAME BAND (SURROUNDING CENTRAL CORE)              -->
+  <!-- ======================================================================= -->
+  <g id="inner-crystalline-frame" stroke-linejoin="round">
+    <!-- Top-Left Inner Frame Band -->
+    <polygon points="455,224 236,492 292,492 484,264" fill="url(#innerBandTopLeft)" stroke="#0e2536" stroke-width="3" />
+    <!-- Top-Left Frame Internal Ice Facets -->
+    <polygon points="455,224 415,273 433,288 468,244" fill="#6da4c0" />
+    <polygon points="468,244 433,288 446,308 484,264" fill="#4e85a3" />
+    <polygon points="415,273 386,308 416,344 446,308 433,288" fill="#9bcbe0" />
+    <polygon points="396,308 415,286 432,306 413,328" fill="#cae8f6" />
+    <polygon points="386,308 338,367 368,402 416,344" fill="#d9f1fb" />
+    <polygon points="338,367 276,443 308,473 368,402" fill="#ffffff" />
+    <polygon points="276,443 236,492 292,492 308,473" fill="#b7dced" />
+    <polygon points="236,492 264,492 288,463 268,453" fill="#8bb9d1" />
+
+    <!-- Top-Right Inner Frame Band -->
+    <polygon points="545,224 764,492 708,492 516,264" fill="url(#innerBandTopRight)" stroke="#0e2536" stroke-width="3" />
+    <!-- Top-Right Frame Internal Ice Facets -->
+    <polygon points="545,224 585,273 567,288 532,244" fill="#7cb0cb" />
+    <polygon points="532,244 567,288 554,308 516,264" fill="#568caa" />
+    <polygon points="585,273 618,314 586,348 554,308 567,288" fill="#b2dced" />
+    <polygon points="586,302 605,325 586,348 568,325" fill="#d8f0fa" />
+    <polygon points="618,314 662,368 632,402 586,348" fill="#e8f7fd" />
+    <polygon points="632,402 662,368 716,434 686,466" fill="#ffffff" />
+    <polygon points="716,434 764,492 708,492 686,466" fill="#bfe0f0" />
+    <polygon points="736,492 764,492 732,453 714,466" fill="#8ab8d0" />
+
+    <!-- Bottom-Left Inner Frame Band -->
+    <polygon points="236,492 292,492 500,755 500,818" fill="url(#innerBandBotLeft)" stroke="#0e2536" stroke-width="3" />
+    <polygon points="236,492 264,492 500,786 500,818" fill="#d9effa" />
+    <polygon points="264,492 292,492 500,755 500,786" fill="#7aa9c4" />
+    <polygon points="236,492 292,492 315,521 258,520" fill="#6393b0" />
+
+    <!-- Bottom-Right Inner Frame Band -->
+    <polygon points="764,492 708,492 500,755 500,818" fill="url(#innerBandBotRight)" stroke="#0e2536" stroke-width="3" />
+    <polygon points="764,492 736,492 500,786 500,818" fill="#a2cbe0" />
+    <polygon points="736,492 708,492 500,755 500,786" fill="#dff2fb" />
+    <polygon points="764,492 708,492 685,521 742,520" fill="#7caac4" />
+
+    <!-- Miter Lines at Horizontal Frame Waist -->
+    <line x1="236" y1="492" x2="292" y2="492" stroke="#10293b" stroke-width="3.5" />
+    <line x1="708" y1="492" x2="764" y2="492" stroke="#10293b" stroke-width="3.5" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 4. DEEP INNER BEZEL SURROUNDING CENTRAL DIAMOND                         -->
+  <!-- ======================================================================= -->
+  <g id="central-bezel" stroke-linejoin="round">
+    <!-- Top-Left Bezel -->
+    <polygon points="484,264 292,492 330,502 500,290 500,275" fill="url(#bezelTopLeft)" stroke="#0d2334" stroke-width="2.5" />
+    <polygon points="445,310 310,470 330,502 456,345" fill="#9ad0e7" opacity="0.65" />
+
+    <!-- Top-Right Bezel -->
+    <polygon points="516,264 708,492 670,502 500,290 500,275" fill="url(#bezelTopRight)" stroke="#0d2334" stroke-width="2.5" />
+    <polygon points="555,310 690,470 670,502 544,345" fill="#8bc3dc" opacity="0.55" />
+
+    <!-- Bottom-Left Bezel (Deep Teal & Navy Grooves) -->
+    <polygon points="292,492 330,502 500,712 500,755" fill="url(#bezelBotLeft)" stroke="#091c2b" stroke-width="3" />
+    <polygon points="292,492 312,497 500,734 500,755" fill="#4690b0" />
+    <polygon points="312,497 330,502 500,712 500,734" fill="#102e42" />
+    <line x1="304" y1="496" x2="500" y2="742" stroke="#76c5e0" stroke-width="2" opacity="0.8" />
+
+    <!-- Bottom-Right Bezel (Deepest Shadow Channel) -->
+    <polygon points="708,492 670,502 500,712 500,755" fill="url(#bezelBotRight)" stroke="#091c2b" stroke-width="3" />
+    <polygon points="708,492 688,497 500,734 500,755" fill="#1f506c" />
+    <polygon points="688,497 670,502 500,712 500,734" fill="#0b2030" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 5. CENTRAL CORE DIAMOND (STARBURST & ASYMMETRIC ICE FACETS)             -->
+  <!-- ======================================================================= -->
+  <g id="central-core-diamond" stroke-linejoin="round">
+    <!-- Base Quadrants -->
+    <polygon points="500,290 330,502 500,502" fill="url(#coreTL)" />
+    <polygon points="500,290 670,502 500,502" fill="url(#coreTR)" />
+    <polygon points="330,502 500,712 500,502" fill="url(#coreBL)" />
+    <polygon points="670,502 500,712 500,502" fill="url(#coreBR)" />
+
+    <!-- === Top-Left Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="500,290 330,502 354,502 500,318" fill="#c4e8f8" />
+    <polygon points="462,337 396,420 412,430 472,354" fill="#9fd7ef" />
+    <!-- Mid Crystalline Shards -->
+    <polygon points="500,318 452,378 476,412 500,375" fill="#dcf2fc" />
+    <polygon points="452,378 398,445 432,462 476,412" fill="#e9f8fe" />
+    <polygon points="398,445 354,502 415,502 432,462" fill="#d4effb" />
+    <!-- Inner Star Core Facet (Pure White) -->
+    <polygon points="500,375 476,412 432,462 415,502 500,502" fill="#ffffff" />
+
+    <!-- === Top-Right Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="500,290 670,502 646,502 500,318" fill="#b4e2f6" />
+    <!-- Distinct Turquoise & White Ice Polygons -->
+    <polygon points="500,318 558,390 526,396 500,368" fill="#7acae8" />
+    <polygon points="558,390 584,422 545,428 526,396" fill="#bce8f8" />
+    <polygon points="500,368 526,396 545,428 500,455" fill="#e6f7fd" />
+    <polygon points="545,428 584,422 606,450 564,468" fill="#f4fbff" />
+    <polygon points="584,422 646,502 606,450" fill="#9edbf2" />
+    <!-- Inner Star Diagonal Ray -->
+    <polygon points="500,455 545,428 564,468 500,502" fill="#ffffff" />
+    <polygon points="500,502 564,468 606,450 646,502" fill="#82cce8" />
+    <polygon points="535,484 585,460 622,502 500,502" fill="#6abde0" opacity="0.65" />
+
+    <!-- === Bottom-Left Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="330,502 500,712 500,684 354,502" fill="#bce5f6" />
+    <!-- Upper Aqua Triangle -->
+    <polygon points="354,502 500,502 444,574" fill="#77c3e2" />
+    <polygon points="354,502 418,502 402,540" fill="#96d5ee" />
+    <!-- Mid & Lower Brilliant White/Ice Rays -->
+    <polygon points="500,502 444,574 470,618 500,580" fill="#dcf3fc" />
+    <polygon points="500,502 500,645 470,618" fill="#f7fdff" />
+    <polygon points="354,502 444,574 470,618 500,645 500,684" fill="#c9ecfa" />
+    <polygon points="424,598 470,618 500,645 500,684" fill="#e8f8fe" />
+
+    <!-- === Bottom-Right Quadrant Detailed Shards === -->
+    <!-- Outer Edge Bevel -->
+    <polygon points="670,502 500,712 500,684 646,502" fill="#cbeTFb" />
+    <!-- Radial Light & Cerulean Rays from Center -->
+    <polygon points="500,502 646,502 604,554" fill="#46a3c9" />
+    <polygon points="500,502 604,554 594,566" fill="#a8e4f8" />
+    <polygon points="500,502 594,566 562,606" fill="#52add2" />
+    <polygon points="500,502 562,606 500,684" fill="#80c8e5" />
+    <polygon points="500,595 546,626 500,684" fill="#bfe8f8" />
+    <polygon points="500,502 532,568 500,610" fill="#9ad8ef" />
+
+    <!-- === Central Diamond Inner Bevel Outline & Crosshair Starburst === -->
+    <polygon points="500,318 646,502 500,684 354,502" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.9" />
+    <!-- Horizontal & Vertical Starburst Ridge Lines -->
+    <line x1="500" y1="290" x2="500" y2="712" stroke="#ffffff" stroke-width="3.5" />
+    <line x1="330" y1="502" x2="670" y2="502" stroke="#ffffff" stroke-width="3.5" />
+    <!-- Subtle Dark Accent Along Bottom-Right Inner Frame -->
+    <polyline points="330,502 500,712 670,502" fill="none" stroke="#0c2638" stroke-width="3.5" />
+    <polyline points="330,502 500,290 670,502" fill="none" stroke="#1a4560" stroke-width="2.5" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 6. TOP CROWN CRYSTAL GEM                                                -->
+  <!-- ======================================================================= -->
+  <g id="top-crown-gem" stroke-linejoin="round">
+    <!-- Upper-Left Main Facet -->
+    <polygon points="500,38 425,165 500,178" fill="url(#topGemUL)" />
+    <!-- Frosty Streak on Upper-Left Facet -->
+    <polygon points="500,38 456,112 478,128 500,90" fill="#d4ecf8" />
+    <polygon points="442,136 425,165 468,172 478,148" fill="#dff2fc" />
+
+    <!-- Upper-Right Main Facet -->
+    <polygon points="500,38 575,165 500,178" fill="url(#topGemUR)" />
+    <!-- Inner Triangle Highlight on Upper-Right -->
+    <polygon points="500,68 554,158 500,168" fill="#d0eaf7" />
+    <polygon points="500,95 542,155 500,164" fill="#eef9fe" />
+
+    <!-- Waist Bevel Band -->
+    <polygon points="425,165 500,178 500,188 448,178" fill="#a2cde3" />
+    <polygon points="575,165 500,178 500,188 552,178" fill="#6b9db9" />
+
+    <!-- Lower-Left Inner Facet -->
+    <polygon points="448,178 500,188 500,300" fill="url(#topGemLL)" />
+    <polygon points="462,181 486,186 500,275 500,300" fill="#ffffff" opacity="0.7" />
+
+    <!-- Lower-Right Inner Facet -->
+    <polygon points="552,178 500,188 500,300" fill="url(#topGemLR)" />
+    <polygon points="552,178 525,183 500,265 500,300" fill="#7ab8d6" opacity="0.65" />
+
+    <!-- Lower Outer Rim Bevels (Left & Right) -->
+    <polygon points="425,165 448,178 500,300 500,323 430,195" fill="#4f7893" />
+    <polygon points="425,165 430,195 458,248 448,178" fill="#7aa3bd" />
+    <polygon points="575,165 552,178 500,300 500,323 570,195" fill="#1e3c52" />
+    <polygon points="552,178 538,212 500,300 500,323" fill="#37627d" />
+
+    <!-- Specular Ridges & Ink Outlines -->
+    <line x1="500" y1="38" x2="500" y2="300" stroke="#ffffff" stroke-width="2.5" />
+    <polyline points="425,165 500,178 575,165" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polyline points="448,178 500,300 552,178" fill="none" stroke="#e0f4fc" stroke-width="1.8" />
+    <polygon points="500,38 575,165 570,195 500,323 430,195 425,165" fill="none" stroke="#081724" stroke-width="4" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 7. LOWER CHEVRON BARS & STEPPED ARMOR BASE                              -->
+  <!-- ======================================================================= -->
+  <g id="lower-chevrons-and-base" stroke-linejoin="round">
+    <!-- === LEFT SIDE CHEVRONS === -->
+    <!-- Inner Dark Slot -->
+    <polygon points="274,558 292,580 484,812 468,826" fill="#0f2537" />
+    <!-- Bright Silver Diagonal Bar -->
+    <polygon points="282,588 302,576 484,802 464,824" fill="url(#chevronSilverL)" stroke="#0d2334" stroke-width="2.5" />
+    <line x1="292" y1="582" x2="474" y2="812" stroke="#ffffff" stroke-width="2.5" />
+    <!-- Second Dark Groove -->
+    <polygon points="295,616 464,824 452,838 305,648" fill="#132c3f" stroke="#091a28" stroke-width="2" />
+    <!-- Outer Faceted V-Plate -->
+    <polygon points="305,648 452,838 438,856 338,766" fill="#8ab5ce" stroke="#0d2334" stroke-width="3" />
+    <polygon points="305,648 378,742 356,756 322,702" fill="#d8effa" />
+    <polygon points="378,742 452,838 438,856 392,814" fill="#dceffb" />
+    <polygon points="322,702 356,756 392,814 338,766" fill="#547d98" />
+    <!-- Left Dark Armored Base Step -->
+    <polygon points="226,655 318,698 338,766 257,736" fill="#234056" stroke="#081724" stroke-width="3.5" />
+    <polygon points="246,678 308,706 322,748 268,726" fill="#4e748e" />
+    <polygon points="246,678 268,726 322,748 314,724" fill="#34566e" />
+
+    <!-- === RIGHT SIDE CHEVRONS === -->
+    <!-- Inner Dark Slot -->
+    <polygon points="726,558 708,580 516,812 532,826" fill="#0f2537" />
+    <!-- Bright Silver Diagonal Bar -->
+    <polygon points="718,588 698,576 516,802 536,824" fill="url(#chevronSilverR)" stroke="#0d2334" stroke-width="2.5" />
+    <line x1="708" y1="582" x2="526" y2="812" stroke="#ffffff" stroke-width="2.5" />
+    <!-- Second Dark Groove -->
+    <polygon points="705,616 536,824 548,838 695,648" fill="#132c3f" stroke="#091a28" stroke-width="2" />
+    <!-- Outer Faceted V-Plate -->
+    <polygon points="695,648 548,838 562,856 662,766" fill="#6b96b1" stroke="#0d2334" stroke-width="3" />
+    <polygon points="695,648 622,742 644,756 678,702" fill="#cbe7f6" />
+    <polygon points="622,742 548,838 562,856 608,814" fill="#b5d9ec" />
+    <polygon points="678,702 644,756 608,814 662,766" fill="#385e78" />
+    <!-- Right Dark Armored Base Step -->
+    <polygon points="774,655 682,698 662,766 743,736" fill="#1c364a" stroke="#081724" stroke-width="3.5" />
+    <polygon points="754,678 692,706 678,748 732,726" fill="#466b85" />
+    <polygon points="754,678 732,726 678,748 686,724" fill="#2b4b62" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 8. LATERAL CRYSTAL WINGS (LEFT & RIGHT TRI-SPIKE CLUSTERS)              -->
+  <!-- ======================================================================= -->
+  <!-- === LEFT WING CLUSTER === -->
+  <g id="left-wing-cluster" stroke-linejoin="round">
+    <!-- 8A. Secondary Lower-Outer Spike (Left) -->
+    <polygon points="52,528 180,582 146,616" fill="url(#wingBright)" />
+    <polygon points="52,528 125,642 146,616" fill="url(#wingMidBlue)" />
+    <polygon points="180,582 235,705 146,616" fill="#9bc5dc" />
+    <polygon points="125,642 146,616 235,705" fill="url(#wingDarkSlate)" />
+    <polygon points="125,642 158,668 235,705 146,616" fill="#25455c" />
+    <!-- Ridges & Outline -->
+    <polyline points="52,528 146,616 235,705" fill="none" stroke="#ffffff" stroke-width="2" />
+    <line x1="125" y1="642" x2="146" y2="616" stroke="#e0f4fc" stroke-width="1.8" />
+    <polygon points="52,528 180,582 235,705 125,642" fill="none" stroke="#081724" stroke-width="3.8" />
+
+    <!-- 8B. Primary Upper-Outer Wing Spike (Left) -->
+    <!-- Top-Left Main Facet -->
+    <polygon points="20,355 155,448 108,488" fill="url(#wingBright)" />
+    <polygon points="20,355 92,432 108,488 64,452" fill="#d4edf9" />
+    <!-- Outer-Left Facet -->
+    <polygon points="20,355 62,520 108,488" fill="#bce0f2" />
+    <polygon points="20,355 46,458 84,452" fill="#e8f7fd" />
+    <!-- Inner-Right Upper Facet -->
+    <polygon points="155,448 202,592 108,488" fill="#d0eaf7" />
+    <polygon points="155,448 176,512 132,514 108,488" fill="#eef9fe" />
+    <!-- Lower-Left Shaded Facet -->
+    <polygon points="62,520 108,488 202,592" fill="url(#wingDarkSlate)" />
+    <polygon points="62,520 96,512 192,586 142,566" fill="#325973" />
+    <!-- Outer Rim Step Under Main Wing -->
+    <polygon points="155,448 174,458 212,578 202,592" fill="#7aa6c0" stroke="#081724" stroke-width="2.5" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="20,355 108,488 202,592" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="62,520 108,488 155,448" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polygon points="20,355 155,448 202,592 62,520" fill="none" stroke="#081724" stroke-width="4" />
+
+    <!-- 8C. Inner Flank Crystal Gem (Left) -->
+    <polygon points="180,512 295,600 262,610" fill="url(#wingBright)" />
+    <polygon points="180,512 235,650 262,610" fill="#9bc7de" />
+    <polygon points="180,512 214,594 246,586" fill="#dcf1fb" />
+    <polygon points="295,600 318,698 262,610" fill="#bce2f4" />
+    <!-- Inner Teal Sub-Triangle -->
+    <polygon points="262,610 298,642 312,688 248,638" fill="#528fae" />
+    <polygon points="235,650 262,610 318,698" fill="#3a6884" opacity="0.65" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="180,512 262,610 318,698" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="235,650 262,610 295,600" fill="none" stroke="#e6f7fd" stroke-width="1.8" />
+    <polygon points="180,512 295,600 318,698 235,650" fill="none" stroke="#081724" stroke-width="3.8" />
+  </g>
+
+  <!-- === RIGHT WING CLUSTER === -->
+  <g id="right-wing-cluster" stroke-linejoin="round">
+    <!-- 8D. Secondary Lower-Outer Spike (Right) -->
+    <polygon points="948,528 820,582 854,616" fill="url(#wingBright)" />
+    <polygon points="948,528 875,642 854,616" fill="#84b3ce" />
+    <polygon points="820,582 765,705 854,616" fill="#78a6c2" />
+    <polygon points="875,642 854,616 765,705" fill="url(#wingDeepNavy)" />
+    <!-- Ridges & Outline -->
+    <polyline points="948,528 854,616 765,705" fill="none" stroke="#ffffff" stroke-width="2" />
+    <line x1="875" y1="642" x2="854" y2="616" stroke="#d4ecf8" stroke-width="1.8" />
+    <polygon points="948,528 820,582 765,705 875,642" fill="none" stroke="#081724" stroke-width="3.8" />
+
+    <!-- 8E. Primary Upper-Outer Wing Spike (Right) -->
+    <!-- Top-Inner Main Facet -->
+    <polygon points="980,355 845,448 892,488" fill="url(#wingBright)" />
+    <polygon points="980,355 908,432 892,488 936,452" fill="#cdeaf8" />
+    <!-- Outer-Right Facet -->
+    <polygon points="980,355 938,520 892,488" fill="#6b9fbb" />
+    <polygon points="980,355 954,458 916,452" fill="#92c2dc" />
+    <!-- Inner-Left Upper Facet -->
+    <polygon points="845,448 798,592 892,488" fill="#8ebcd6" />
+    <polygon points="845,448 824,512 868,514 892,488" fill="#cae7f6" />
+    <!-- Lower-Right Shaded Facet -->
+    <polygon points="938,520 892,488 798,592" fill="url(#wingDeepNavy)" />
+    <polygon points="938,520 904,512 808,586 858,566" fill="#284c64" />
+    <!-- Outer Rim Step Under Main Wing -->
+    <polygon points="845,448 826,458 788,578 798,592" fill="#54809c" stroke="#081724" stroke-width="2.5" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="980,355 892,488 798,592" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="938,520 892,488 845,448" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polygon points="980,355 845,448 798,592 938,520" fill="none" stroke="#081724" stroke-width="4" />
+
+    <!-- 8F. Inner Flank Crystal Gem (Right) -->
+    <polygon points="820,512 705,600 738,610" fill="url(#wingBright)" />
+    <polygon points="820,512 765,650 738,610" fill="#78aac6" />
+    <polygon points="705,600 682,698 738,610" fill="#9eccdf" />
+    <!-- Inner Teal Sub-Triangle -->
+    <polygon points="738,610 702,642 688,688 752,638" fill="#467e9c" />
+    <polygon points="765,650 738,610 682,698" fill="#264b63" opacity="0.7" />
+    <!-- Specular Ridges & Outline -->
+    <polyline points="820,512 738,610 682,698" fill="none" stroke="#ffffff" stroke-width="2.2" />
+    <polyline points="765,650 738,610 705,600" fill="none" stroke="#e6f7fd" stroke-width="1.8" />
+    <polygon points="820,512 705,600 682,698 765,650" fill="none" stroke="#081724" stroke-width="3.8" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 9. BOTTOM TAIL CRYSTAL GEM                                              -->
+  <!-- ======================================================================= -->
+  <g id="bottom-tail-gem" stroke-linejoin="round">
+    <!-- Upper-Left Facet -->
+    <polygon points="500,755 438,835 500,828" fill="url(#topGemUL)" />
+    <polygon points="500,755 462,804 484,828 500,828" fill="#ffffff" />
+
+    <!-- Upper-Right Facet -->
+    <polygon points="500,755 562,835 500,828" fill="url(#topGemUR)" />
+    <polygon points="500,755 538,804 516,828 500,828" fill="#d4edf9" />
+
+    <!-- Lower-Left Inner Facet -->
+    <polygon points="455,838 500,828 500,940" fill="url(#topGemLL)" />
+    <polygon points="472,834 500,828 500,925" fill="#f2fbff" />
+
+    <!-- Lower-Right Inner Facet -->
+    <polygon points="545,838 500,828 500,940" fill="url(#topGemLR)" />
+    <polygon points="528,834 500,828 500,925" fill="#88c5e2" />
+
+    <!-- Lower-Left Outer Bevel -->
+    <polygon points="438,835 455,838 500,940 500,965 444,865" fill="#4a748f" />
+    <polygon points="438,835 444,865 472,912 455,838" fill="#7da7c0" />
+
+    <!-- Lower-Right Outer Bevel -->
+    <polygon points="562,835 545,838 500,940 500,965 556,865" fill="#18354a" />
+    <polygon points="545,838 528,885 500,940 500,965" fill="#2e5772" />
+
+    <!-- Specular Ridges & Ink Outline -->
+    <line x1="500" y1="755" x2="500" y2="940" stroke="#ffffff" stroke-width="2.5" />
+    <polyline points="438,835 500,828 562,835" fill="none" stroke="#ffffff" stroke-width="2" />
+    <polyline points="455,838 500,940 545,838" fill="none" stroke="#dcf2fc" stroke-width="1.6" />
+    <polygon points="500,755 562,835 556,865 500,965 444,865 438,835" fill="none" stroke="#081724" stroke-width="4" />
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 10. FINAL SPECULAR HIGHLIGHTS & CRISP EDGE ACCENTS                      -->
+  <!-- ======================================================================= -->
+  <g id="specular-highlights" fill="none" stroke="#ffffff" stroke-linecap="round">
+    <!-- Frame Inner Rim Highlights -->
+    <line x1="452" y1="228" x2="240" y2="488" stroke-width="2" opacity="0.85" />
+    <line x1="548" y1="228" x2="760" y2="488" stroke-width="2" opacity="0.85" />
+    <line x1="294" y1="494" x2="496" y2="750" stroke-width="1.8" opacity="0.8" />
+    <line x1="706" y1="494" x2="504" y2="750" stroke-width="1.8" opacity="0.8" />
+
+    <!-- Central Diamond Starburst Glints -->
+    <circle cx="500" cy="502" r="4" fill="#ffffff" stroke="none" />
+    <line x1="415" y1="502" x2="585" y2="502" stroke-width="4.5" opacity="0.9" />
+    <line x1="500" y1="395" x2="500" y2="610" stroke-width="4.5" opacity="0.9" />
+  </g>
+
+      </svg>
+    </g>
+
+    <!-- Bio Tagline -->
+    <text x="253" y="181" font-size="20" font-weight="500" fill="#1A5096">Focus. Compete. Improve.</text>
+
+    <!-- Badge 1: Hall of Fame -->
+    <g transform="translate(252, 213)">
+      <rect x="0" y="0" width="128" height="44" rx="10" fill="#FFF5E5" />
+      <!-- Crown Icon -->
+      <path d="M13 27 L11 16 L16.5 20.5 L21 14 L25.5 20.5 L31 16 L29 27 Z" fill="#F58800" stroke="#F58800" stroke-width="1" stroke-linejoin="round" />
+      <rect x="13" y="29" width="16" height="2.2" rx="1" fill="#F58800" />
+      <text x="38" y="27" font-size="13.5" font-weight="600" fill="#F58800">Hall of Fame</text>
+    </g>
+
+    <!-- Badge 2: Top Performer -->
+    <g transform="translate(390, 213)">
+      <rect x="0" y="0" width="128" height="44" rx="10" fill="#EBF5FF" />
+      <!-- Mini Trophy Icon -->
+      <path d="M14 14 H26 V20 C26 23.5 23.2 26 20 26 C16.8 26 14 23.5 14 20 Z" fill="#0066FF" />
+      <path d="M14 16 H11.5 C11.5 19 12.5 21 14.5 21.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <path d="M26 16 H28.5 C28.5 19 27.5 21 25.5 21.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <rect x="18.5" y="25.5" width="3" height="3.5" fill="#0066FF" />
+      <rect x="15" y="29" width="10" height="2.2" rx="1" fill="#0066FF" />
+      <text x="35" y="27" font-size="13.5" font-weight="600" fill="#0066FF">Top Performer</text>
+    </g>
+
+    <!-- Badge 3: Winner -->
+    <g transform="translate(528, 213)">
+      <rect x="0" y="0" width="96" height="44" rx="10" fill="#F4ECFF" />
+      <!-- Shield with Star Icon -->
+      <path d="M19 13 L27 16.2 V22.2 C27 26.8 23.6 30.2 19 31.8 C14.4 30.2 11 26.8 11 22.2 V16.2 Z" fill="none" stroke="#7822FF" stroke-width="2" stroke-linejoin="round" />
+      <polygon points="19,17.5 20.4,20.3 23.5,20.7 21.2,22.9 21.8,26 19,24.5 16.2,26 16.8,22.9 14.5,20.7 17.6,20.3" fill="#7822FF" />
+      <text x="36" y="27" font-size="13.5" font-weight="600" fill="#7822FF">Winner</text>
+    </g>
+
+    <!-- ==================== TOP RIGHT CARD 1: SUMMARY COUNTERS ==================== -->
+    <g transform="translate(644, 62)">
+      <rect x="0" y="0" width="516" height="104" rx="16" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" filter="url(#panel-shadow)" />
+
+      <!-- 1. Achievements -->
+      <g transform="translate(24, 21)">
+        <!-- Handles -->
+        <path d="M12 10 H5.5 C3.5 10 2 11.8 2 14 C2 20 6.5 25 13 26.5" fill="none" stroke="#F59F00" stroke-width="4" stroke-linecap="round" />
+        <path d="M36 10 H42.5 C44.5 10 46 11.8 46 14 C46 20 41.5 25 35 26.5" fill="none" stroke="#F08C00" stroke-width="4" stroke-linecap="round" />
+        <!-- Cup Body -->
+        <path d="M10 4 H38 V19 C38 27.5 31.8 34 24 34 C16.2 34 10 27.5 10 19 Z" fill="url(#trophy-gold)" />
+        <!-- Cup Highlight -->
+        <path d="M14 7 H21 V20 C21 24 18 28 14 26 Z" fill="#FFF3BF" opacity="0.45" />
+        <!-- Stem & Base -->
+        <rect x="21" y="33" width="6" height="9" fill="#F08C00" />
+        <path d="M14 42 H34 C36 42 37 43.5 37 45.5 V47 H11 V45.5 C11 43.5 12 42 14 42 Z" fill="url(#trophy-base)" />
+      </g>
+      <text x="89" y="50" font-size="28" class="stat-num">24</text>
+      <text x="89" y="75" class="label-blue">Achievements</text>
+
+      <!-- Divider 1 -->
+      <line x1="199" y1="22" x2="199" y2="82" stroke="#E2E8F0" stroke-width="1.2" />
+
+      <!-- 2. Goals -->
+      <g transform="translate(244, 52)">
+        <circle cx="0" cy="0" r="21" fill="none" stroke="#22C522" stroke-width="4" />
+        <circle cx="0" cy="0" r="13" fill="none" stroke="#22C522" stroke-width="4" />
+        <circle cx="0" cy="0" r="5.5" fill="#22C522" />
+      </g>
+      <text x="283" y="50" font-size="28" class="stat-num">12</text>
+      <text x="283" y="75" class="label-blue">Goals</text>
+
+      <!-- Divider 2 -->
+      <line x1="348" y1="22" x2="348" y2="82" stroke="#E2E8F0" stroke-width="1.2" />
+
+      <!-- 3. Milestones -->
+      <g transform="translate(370, 21)">
+        <!-- Flag Pole & Base -->
+        <line x1="12" y1="4" x2="12" y2="44" stroke="#FF4D3D" stroke-width="4" stroke-linecap="round" />
+        <rect x="2" y="42" width="24" height="5" rx="2.5" fill="#FF4D3D" />
+        <!-- Waving Flag -->
+        <path d="M12 5 C20 2, 24 8, 30 8 C35 8, 38 6, 40 6 V26 C37 26, 34 28, 29 28 C23 28, 19 22, 12 25 Z" fill="#FF4D3D" stroke="#FF4D3D" stroke-width="1.5" stroke-linejoin="round" />
+      </g>
+      <text x="428" y="50" font-size="28" class="stat-num">7</text>
+      <text x="428" y="75" class="label-blue">Milestones</text>
+    </g>
+
+    <!-- ==================== TOP RIGHT CARD 2: LAST 7 DAYS CHART ==================== -->
+    <g transform="translate(644, 176)">
+      <rect x="0" y="0" width="516" height="158" rx="16" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" filter="url(#panel-shadow)" />
+
+      <!-- Calendar Icon (Purple) -->
+      <g transform="translate(19, 15)">
+        <rect x="1" y="3" width="16" height="15" rx="3" fill="none" stroke="#7822FF" stroke-width="2" />
+        <path d="M1 8 H17" stroke="#7822FF" stroke-width="2" />
+        <line x1="5" y1="1" x2="5" y2="4.5" stroke="#7822FF" stroke-width="2" stroke-linecap="round" />
+        <line x1="13" y1="1" x2="13" y2="4.5" stroke="#7822FF" stroke-width="2" stroke-linecap="round" />
+        <circle cx="6" cy="12.5" r="1.2" fill="#7822FF" />
+        <circle cx="12" cy="12.5" r="1.2" fill="#7822FF" />
+      </g>
+
+      <text x="49" y="30" class="sub-header">LAST 7 DAYS</text>
+
+      <!-- View details link -->
+      <text x="418" y="29" font-size="12.5" font-weight="600" fill="#0066FF">View details</text>
+      <path d="M489 25 H497 M493.5 21.5 L497.5 25 L493.5 28.5" stroke="#0066FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+      <!-- Dashed Baseline -->
+      <line x1="14" y1="130" x2="502" y2="130" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5,4" />
+
+      <!-- Bar 1: Mon (6h 32m) -->
+      <text x="41.5" y="75" text-anchor="middle" class="chart-text">6h 32m</text>
+      <rect x="29" y="84" width="25" height="46" rx="4" fill="url(#bar-lavender)" />
+      <text x="41.5" y="147" text-anchor="middle" class="chart-text">Mon</text>
+
+      <!-- Bar 2: Tue (7h 45m) -->
+      <text x="111.5" y="62" text-anchor="middle" class="chart-text">7h 45m</text>
+      <rect x="99" y="70" width="25" height="60" rx="4" fill="url(#bar-lavender)" />
+      <text x="111.5" y="147" text-anchor="middle" class="chart-text">Tue</text>
+
+      <!-- Bar 3: Wed (5h 10m) -->
+      <text x="181.5" y="84" text-anchor="middle" class="chart-text">5h 10m</text>
+      <rect x="169" y="93" width="25" height="37" rx="4" fill="url(#bar-lavender)" />
+      <text x="181.5" y="147" text-anchor="middle" class="chart-text">Wed</text>
+
+      <!-- Bar 4: Thu (9h 25m) -->
+      <text x="250.5" y="48" text-anchor="middle" class="chart-text">9h 25m</text>
+      <rect x="238" y="57" width="25" height="73" rx="4" fill="url(#bar-lavender)" />
+      <text x="250.5" y="147" text-anchor="middle" class="chart-text">Thu</text>
+
+      <!-- Bar 5: Fri (8h 05m) -->
+      <text x="321.5" y="61" text-anchor="middle" class="chart-text">8h 05m</text>
+      <rect x="309" y="70" width="25" height="60" rx="4" fill="url(#bar-lavender)" />
+      <text x="321.5" y="147" text-anchor="middle" class="chart-text">Fri</text>
+
+      <!-- Bar 6: Sat (6h 15m) -->
+      <text x="390.5" y="74" text-anchor="middle" class="chart-text">6h 15m</text>
+      <rect x="378" y="83" width="25" height="47" rx="4" fill="url(#bar-lavender)" />
+      <text x="390.5" y="147" text-anchor="middle" class="chart-text">Sat</text>
+
+      <!-- Bar 7: Sun (9h 07m) - Highlighted Active Bar -->
+      <text x="460.5" y="53" text-anchor="middle" class="chart-text">9h 07m</text>
+      <rect x="448" y="62" width="25" height="68" rx="4" fill="url(#bar-active)" />
+      <text x="460.5" y="147" text-anchor="middle" class="chart-text">Sun</text>
+    </g>
+
+    <!-- ==================== BOTTOM LEFT: LEADERBOARD CARD ==================== -->
+    <g transform="translate(41, 347)">
+      <rect x="0" y="0" width="205" height="422" rx="16" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" filter="url(#panel-shadow)" />
+
+      <text x="45" y="38" class="section-header">LEADERBOARD</text>
+
+      <!-- #1 Rank -->
+      <text x="49" y="114" font-size="52" font-weight="800" fill="#7B2CBF">#1</text>
+      <text x="49" y="148" font-size="17" font-weight="600" fill="#1A5096">Top 1%</text>
+
+      <!-- Decorative Vertical Bars at Bottom -->
+      <rect x="31" y="251" width="26" height="147" rx="4" fill="url(#leaderboard-bar)" />
+      <rect x="70" y="231" width="26" height="167" rx="4" fill="url(#leaderboard-bar)" />
+      <rect x="109" y="191" width="26" height="207" rx="4" fill="url(#leaderboard-bar)" />
+      <rect x="148" y="205" width="26" height="193" rx="4" fill="url(#leaderboard-bar)" />
+    </g>
+
+    <!-- ==================== BOTTOM RIGHT: HOURS OVERVIEW CARD ==================== -->
+    <g transform="translate(269, 347)">
+      <rect x="0" y="0" width="891" height="422" rx="16" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" filter="url(#panel-shadow)" />
+
+      <text x="21" y="38" class="section-header">HOURS OVERVIEW</text>
+
+      <!-- Column 1: MAY (MONTHLY) -->
+      <g transform="translate(20, 70)">
+        <!-- Purple Calendar Icon -->
+        <rect x="1" y="3" width="18" height="17" rx="3.5" fill="none" stroke="#7822FF" stroke-width="2.2" />
+        <path d="M1 8.5 H19" stroke="#7822FF" stroke-width="2.2" />
+        <line x1="5.5" y1="0.5" x2="5.5" y2="4.5" stroke="#7822FF" stroke-width="2.2" stroke-linecap="round" />
+        <line x1="14.5" y1="0.5" x2="14.5" y2="4.5" stroke="#7822FF" stroke-width="2.2" stroke-linecap="round" />
+        <circle cx="6.5" cy="14" r="1.3" fill="#7822FF" />
+        <circle cx="13.5" cy="14" r="1.3" fill="#7822FF" />
+
+        <text x="34" y="16" class="sub-header">MAY (MONTHLY)</text>
+        <text x="0" y="68" font-size="36" class="stat-num">321h</text>
+      </g>
+
+      <line x1="201" y1="71" x2="201" y2="141" stroke="#E2E8F0" stroke-width="1.2" />
+
+      <!-- Column 2: WEEKLY -->
+      <g transform="translate(244, 70)">
+        <!-- Blue Calendar Icon -->
+        <rect x="1" y="3" width="18" height="17" rx="3.5" fill="none" stroke="#0066FF" stroke-width="2.2" />
+        <path d="M1 8.5 H19" stroke="#0066FF" stroke-width="2.2" />
+        <line x1="5.5" y1="0.5" x2="5.5" y2="4.5" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round" />
+        <line x1="14.5" y1="0.5" x2="14.5" y2="4.5" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round" />
+        <circle cx="6.5" cy="14" r="1.3" fill="#0066FF" />
+        <circle cx="13.5" cy="14" r="1.3" fill="#0066FF" />
+
+        <text x="34" y="16" class="sub-header">WEEKLY</text>
+        <text x="0" y="68" font-size="36" class="stat-num">78h</text>
+      </g>
+
+      <line x1="392" y1="71" x2="392" y2="141" stroke="#E2E8F0" stroke-width="1.2" />
+
+      <!-- Column 3: DAILY -->
+      <g transform="translate(429, 70)">
+        <!-- Green Clock Icon -->
+        <circle cx="11" cy="11" r="10" fill="none" stroke="#22C522" stroke-width="2.2" />
+        <polyline points="11,5.5 11,11.5 15,13.5" fill="none" stroke="#22C522" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+
+        <text x="36" y="16" class="sub-header">DAILY</text>
+        <text x="0" y="68" font-size="36" class="stat-num">08h 11m</text>
+      </g>
+
+      <line x1="612" y1="71" x2="612" y2="141" stroke="#E2E8F0" stroke-width="1.2" />
+
+      <!-- Column 4: ALL TIME -->
+      <g transform="translate(649, 70)">
+        <!-- Orange Infinity Icon -->
+        <path d="M7 6 C3.5 6 1 8.5 1 11.5 C1 14.5 3.5 17 7 17 C11 17 15 6 19 6 C22.5 6 25 8.5 25 11.5 C25 14.5 22.5 17 19 17 C15 17 11 6 7 6 Z" fill="none" stroke="#F58800" stroke-width="2.5" stroke-linecap="round" />
+
+        <text x="38" y="16" class="sub-header">ALL TIME</text>
+        <text x="0" y="68" font-size="36" class="stat-num">1,937h 50m</text>
+      </g>
+
+      <!-- ==================== SUB-CARD: TO NEXT RANK GROUP ==================== -->
+      <g transform="translate(17, 169)">
+        <rect x="0" y="0" width="855" height="94" rx="14" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" />
+
+        <text x="21" y="34" class="sub-header">TO NEXT RANK GROUP</text>
+        <!-- Info (i) icon -->
+        <g transform="translate(199, 29)">
+          <circle cx="0" cy="0" r="7.5" fill="none" stroke="#1A5096" stroke-width="1.5" />
+          <line x1="0" y1="-0.5" x2="0" y2="4" stroke="#1A5096" stroke-width="1.5" stroke-linecap="round" />
+          <circle cx="0" cy="-3.2" r="1" fill="#1A5096" />
+        </g>
+
+        <!-- Diamond Rank Badge -->
+        <g transform="translate(26, 63)">
+          <polygon points="0,-13 10,-7 10,7 0,13 -10,7 -10,-7" fill="#2B213A" stroke="#6C588C" stroke-width="1.2" />
+          <polygon points="0,-14 3,-10 -3,-10" fill="#9D85C4" />
+          <polygon points="0,14 3,10 -3,10" fill="#9D85C4" />
+          <polygon points="-12,0 -9,-4 -9,4" fill="#9D85C4" />
+          <polygon points="12,0 9,-4 9,4" fill="#9D85C4" />
+          <!-- Inner purple diamond gem -->
+          <polygon points="0,-8 6,0 0,8 -6,0" fill="#C77DFF" />
+          <polygon points="0,-8 6,0 0,0" fill="#E0AAFF" />
+          <polygon points="0,0 -6,0 0,8" fill="#7B2CBF" />
+        </g>
+
+        <!-- Diamond Text -->
+        <text x="48" y="68" font-size="15" font-weight="600" fill="#0E1726">
+          Diamond <tspan fill="#1A5096" font-weight="500">(155h to 205h)</tspan>
+        </text>
+
+        <!-- Arrow right -->
+        <path d="M242 63 H254 M249.5 58.5 L254.5 63 L249.5 67.5" stroke="#1A5096" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+        <!-- Ascendant Rank Badge -->
+        <g transform="translate(285, 63)">
+          <polygon points="0,-13 10,-7 10,7 0,13 -10,7 -10,-7" fill="#18342E" stroke="#4D8B7B" stroke-width="1.2" />
+          <polygon points="0,-14 3,-10 -3,-10" fill="#74C69D" />
+          <polygon points="0,14 3,10 -3,10" fill="#74C69D" />
+          <polygon points="-12,0 -9,-4 -9,4" fill="#74C69D" />
+          <polygon points="12,0 9,-4 9,4" fill="#74C69D" />
+          <!-- Inner emerald diamond gem -->
+          <polygon points="0,-8 6,0 0,8 -6,0" fill="#2EC4B6" />
+          <polygon points="0,-8 6,0 0,0" fill="#80FFDB" />
+          <polygon points="0,0 -6,0 0,8" fill="#0F766E" />
+        </g>
+
+        <!-- Ascendant Text -->
+        <text x="307" y="68" font-size="15" font-weight="600" fill="#0E1726">
+          Ascendant <tspan fill="#1A5096" font-weight="500">(205h to 280h)</tspan>
+        </text>
+
+        <!-- Progress Bar -->
+        <rect x="526" y="57" width="248" height="8" rx="4" fill="#EAECEF" />
+        <rect x="526" y="57" width="172" height="8" rx="4" fill="url(#progress-grad)" />
+
+        <!-- 71% Text -->
+        <text x="796" y="68" font-size="17" font-weight="600" fill="#1A5096">71%</text>
+      </g>
+
+      <!-- ==================== SECTION: TIME BREAKDOWN ==================== -->
+      <text x="17" y="299" class="section-header">TIME BREAKDOWN</text>
+
+      <!-- Card 1: CAM HOURS -->
+      <g transform="translate(17, 316)">
+        <rect x="0" y="0" width="273" height="92" rx="14" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" />
+        <!-- Green Video Cam Icon -->
+        <g transform="translate(24, 19)">
+          <rect x="0" y="2" width="17" height="13" rx="3" fill="#34C724" />
+          <polygon points="17,6 24,2.5 24,14.5 17,11" fill="#34C724" stroke="#34C724" stroke-width="1.5" stroke-linejoin="round" />
+        </g>
+        <text x="63" y="33" class="sub-header">CAM HOURS</text>
+        <text x="24" y="76" font-size="31" class="stat-num">1,128h</text>
+        <text x="185" y="76" font-size="17" font-weight="700" fill="#22C522">58%</text>
+      </g>
+
+      <!-- Card 2: NON CAM HOURS -->
+      <g transform="translate(307, 316)">
+        <rect x="0" y="0" width="273" height="92" rx="14" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" />
+        <!-- Red Slashed Video Cam Icon -->
+        <g transform="translate(24, 19)">
+          <rect x="0" y="2" width="17" height="13" rx="3" fill="#FF4D3D" />
+          <polygon points="17,6 24,2.5 24,14.5 17,11" fill="#FF4D3D" stroke="#FF4D3D" stroke-width="1.5" stroke-linejoin="round" />
+          <!-- Diagonal slash with white backing border -->
+          <line x1="-1" y1="0" x2="22" y2="17" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="0" y1="0.5" x2="21" y2="16.5" stroke="#FF4D3D" stroke-width="2" stroke-linecap="round" />
+        </g>
+        <text x="63" y="33" class="sub-header">NON CAM HOURS</text>
+        <text x="24" y="76" font-size="31" class="stat-num">809h 50m</text>
+        <text x="206" y="76" font-size="17" font-weight="700" fill="#FF2E1F">42%</text>
+      </g>
+
+      <!-- Card 3: OVERALL HOURS -->
+      <g transform="translate(597, 316)">
+        <rect x="0" y="0" width="275" height="92" rx="14" fill="#FFFFFF" stroke="#E9EEF5" stroke-width="1.5" />
+        <!-- Blue Clock Icon -->
+        <g transform="translate(24, 17)">
+          <circle cx="10.5" cy="10.5" r="10" fill="none" stroke="#0066FF" stroke-width="2.2" />
+          <polyline points="10.5,5 10.5,11 14.5,13" fill="none" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <text x="58" y="33" class="sub-header">OVERALL HOURS</text>
+        <text x="24" y="76" font-size="31" font-weight="700" fill="#0066FF" letter-spacing="-0.02em">1,937h 50m</text>
+      </g>
+    </g>
+  </g>
+</svg>

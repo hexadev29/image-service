@@ -13,6 +13,8 @@
     "compare:scale1": "tsx src/scripts/compare-scale1.ts",
     "render:compare": "tsx src/scripts/render-comparison-samples.ts",
     "test:bandwidth": "npm run build && tsx src/scripts/test-scale1-svg-bandwidth.ts",
+    "render:svg:single": "tsx src/scripts/render-svg-card.ts",
+    "test:svg:100": "tsx src/scripts/render-svg-card.ts --100",
     "benchmark:rank-svg": "npm run build && tsx src/scripts/benchmark-rank-svg.ts"
   },
   "dependencies": {
