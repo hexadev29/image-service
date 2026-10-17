@@ -10,15 +10,7 @@ const ASSETS_DIR = join(process.cwd(), "src", "assets");
 const ORIGINAL_SVG_PATH = join(ASSETS_DIR, "profile_with_platinum_rank.svg");
 const BAKED_SVG_PATH = join(ASSETS_DIR, "profile_with_baked_shadow.svg");
 
-function getFontFiles(): string[] {
-  const localFonts = join(ASSETS_DIR, "fonts");
-  const distFonts = join(process.cwd(), "dist", "assets", "fonts");
-  const dir = existsSync(localFonts) ? localFonts : distFonts;
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".ttf"))
-    .map((f) => join(dir, f));
-}
+import { resolveRequiredFonts } from "../utils/fontResolver.js";
 
 interface PixelDiffResult {
   totalPixels: number;
@@ -213,7 +205,7 @@ async function main() {
   console.log(`  ✓ card-background-baked.png: ${(bakedInfo.pngSize / 1024).toFixed(1)} KB`);
   console.log(`  ✓ profile_with_baked_shadow.svg: ${(bakedInfo.svgSize / 1024).toFixed(1)} KB\n`);
 
-  const fontFiles = getFontFiles();
+  const fontFiles = resolveRequiredFonts();
   console.log(`Loaded ${fontFiles.length} local Poppins font files for Resvg.\n`);
 
   // Step 2: Render single images for visual inspection and pixel comparison

@@ -6,10 +6,12 @@ import { RenderWorkerPool } from "./rank-profile/RenderWorkerPool.js";
 
 const port = Number(process.env.PORT ?? 9000);
 const host = process.env.HOST ?? "0.0.0.0";
-const clusterEnabled = process.env.CLUSTER_MODE !== "false";
+// Tune cluster concurrency to prevent runaway multi-process RAM multiplication
+const clusterEnabled = process.env.CLUSTER_MODE === "true";
+const defaultConcurrency = Math.max(1, Math.min(availableParallelism(), 2));
 const clusterWorkers = readPositiveInt(
   process.env.WEB_CONCURRENCY,
-  availableParallelism(),
+  defaultConcurrency,
 );
 const renderWorkerThreads = readPositiveInt(
   process.env.RENDER_WORKER_THREADS,

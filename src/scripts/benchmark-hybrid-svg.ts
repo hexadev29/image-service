@@ -23,21 +23,7 @@ const BRAIN_ARTIFACTS_DIR =
 
 mkdirSync(ARTIFACTS_DIR, { recursive: true });
 
-function resolveFonts(): string[] {
-  const localFonts = join(process.cwd(), "src", "assets", "fonts");
-  if (existsSync(localFonts)) {
-    return readdirSync(localFonts)
-      .filter((f) => f.endsWith(".ttf"))
-      .map((f) => join(localFonts, f));
-  }
-  const distFonts = join(process.cwd(), "dist", "assets", "fonts");
-  if (existsSync(distFonts)) {
-    return readdirSync(distFonts)
-      .filter((f) => f.endsWith(".ttf"))
-      .map((f) => join(distFonts, f));
-  }
-  return [];
-}
+import { resolveRequiredFonts } from "../utils/fontResolver.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Variant B: Pure SVG Template Renderer (Resvg)
@@ -55,7 +41,7 @@ class VariantB_SvgRenderer {
       "profile_with_baked_shadow.svg",
     );
     this.svgContent = readFileSync(svgPath, "utf8");
-    this.fontFiles = resolveFonts();
+    this.fontFiles = resolveRequiredFonts();
   }
 
   public render(): { buffer: Buffer; contentType: string } {

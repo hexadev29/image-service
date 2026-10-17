@@ -12,30 +12,7 @@ import type {
   RankProfileCardInput,
   RenderResult,
 } from "./rankProfile.types.js";
-
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-
-function resolveFonts(): string[] {
-  const localFonts = join(process.cwd(), "src", "assets", "fonts");
-  if (existsSync(localFonts)) {
-    return readdirSync(localFonts)
-      .filter((f) => f.endsWith(".ttf"))
-      .map((f) => join(localFonts, f));
-  }
-  const distFonts = join(process.cwd(), "dist", "assets", "fonts");
-  if (existsSync(distFonts)) {
-    return readdirSync(distFonts)
-      .filter((f) => f.endsWith(".ttf"))
-      .map((f) => join(distFonts, f));
-  }
-  const relative = join(__dirname, "..", "assets", "fonts");
-  if (existsSync(relative)) {
-    return readdirSync(relative)
-      .filter((f) => f.endsWith(".ttf"))
-      .map((f) => join(relative, f));
-  }
-  return [];
-}
+import { resolveRequiredFonts } from "../utils/fontResolver.js";
 
 const C = {
   ink: "#27223A",
@@ -80,7 +57,7 @@ export class SvgHybridProfileRenderer {
 
   constructor(options: SvgHybridRendererOptions = {}) {
     this.assetCache = options.assetCache ?? new PresizedRankAssetCache();
-    this.fontFiles = resolveFonts();
+    this.fontFiles = resolveRequiredFonts();
     this.scale = options.scale ?? 1;
 
     // Fast canvas context strictly for text measurement (e.g. nameWidth)

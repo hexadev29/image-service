@@ -3,6 +3,9 @@ import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+
+sharp.cache(false);
+sharp.concurrency(1);
 import { loadImage, type Image } from "@napi-rs/canvas";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));

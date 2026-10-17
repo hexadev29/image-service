@@ -4,12 +4,12 @@ import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
-import sharp from "sharp";
 import {
   printProcessHeader,
   logWithPid,
   printPeakResourceUsage,
 } from "../utils/processMetrics.js";
+import { resolveRequiredFonts } from "../utils/fontResolver.js";
 
 const ORIGINAL_SVG_PATH = join(
   process.cwd(),
@@ -24,8 +24,6 @@ const BAKED_SVG_PATH = join(
   "profile_with_baked_shadow.svg",
 );
 
-import { AvatarCache } from "../rank-profile/AvatarCache.js";
-
 const DEFAULT_TEST_AVATAR =
   "https://avatars.githubusercontent.com/u/9919?s=200&v=4";
 
@@ -33,9 +31,13 @@ export async function injectCustomAvatar(
   svgString: string,
   avatarUrlOrBuffer: string | Buffer,
 ): Promise<string> {
-  const avatarDataUri = await AvatarCache.getInstance().getAvatarDataUri(
+  const { AvatarCache, FINAL_DISPLAY_AVATAR_DIAMETER } = await import(
+    "../rank-profile/AvatarCache.js"
+  );
+  const cache = AvatarCache.getInstance();
+  const avatarDataUri = await cache.getAvatarDataUri(
     avatarUrlOrBuffer,
-    334,
+    FINAL_DISPLAY_AVATAR_DIAMETER, // 167px exact final display dimension
   );
 
   const avatarGroupRegex =
@@ -48,16 +50,6 @@ export async function injectCustomAvatar(
     `;
 
   return svgString.replace(avatarGroupRegex, newAvatarMarkup);
-}
-
-function getFontFiles(): string[] {
-  const localFonts = join(process.cwd(), "src", "assets", "fonts");
-  const distFonts = join(process.cwd(), "dist", "assets", "fonts");
-  const dir = existsSync(localFonts) ? localFonts : distFonts;
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".ttf"))
-    .map((f) => join(dir, f));
 }
 
 async function main() {
@@ -100,7 +92,7 @@ async function main() {
 
   logWithPid(`Source SVG string size: ${(Buffer.byteLength(svgContent, "utf8") / 1024).toFixed(1)} KB`);
 
-  const fontFiles = getFontFiles();
+  const fontFiles = resolveRequiredFonts();
   logWithPid(`Loaded font files for Resvg: ${fontFiles.length} fonts (Poppins)`);
 
   // Initialize Resvg instance fitted to 1200 width (Scale 1) with font registration

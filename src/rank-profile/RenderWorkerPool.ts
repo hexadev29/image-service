@@ -185,7 +185,16 @@ export class RenderWorkerPool implements RenderService {
 }
 
 export function getDefaultRenderWorkerCount(): number {
-  return Math.max(1, Math.min(availableParallelism(), 4));
+  // Tune render concurrency to balance high throughput with minimal RAM footprint.
+  // Each worker thread instantiates its own V8 isolate and native image rendering instances (~60-80MB each).
+  // Capping the default to 2 provides concurrent non-blocking renders while keeping memory strictly bounded.
+  const envVal = process.env.RENDER_WORKER_THREADS
+    ? Number(process.env.RENDER_WORKER_THREADS)
+    : undefined;
+  if (envVal && Number.isInteger(envVal) && envVal >= 1) {
+    return envVal;
+  }
+  return Math.max(1, Math.min(availableParallelism(), 2));
 }
 
 function toWorkerError(error: WorkerMessage["error"]): Error {
