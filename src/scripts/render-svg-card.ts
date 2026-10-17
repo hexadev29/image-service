@@ -4,6 +4,8 @@ import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
+import sharp from "sharp";
+
 const ORIGINAL_SVG_PATH = join(
   process.cwd(),
   "src",
@@ -16,6 +18,40 @@ const BAKED_SVG_PATH = join(
   "assets",
   "profile_with_baked_shadow.svg",
 );
+
+export async function injectCustomAvatar(
+  svgString: string,
+  avatarUrlOrBuffer: string | Buffer,
+): Promise<string> {
+  let rawBuffer: Buffer;
+  if (typeof avatarUrlOrBuffer === "string") {
+    const res = await fetch(avatarUrlOrBuffer);
+    if (!res.ok) throw new Error(`Failed to fetch avatar: ${res.statusText}`);
+    rawBuffer = Buffer.from(await res.arrayBuffer());
+  } else {
+    rawBuffer = avatarUrlOrBuffer;
+  }
+
+  // Resize with sharp to 334x334 (2x retina for 167x167 avatar circle)
+  const resizedAvatar = await sharp(rawBuffer)
+    .resize(334, 334, { fit: "cover" })
+    .png()
+    .toBuffer();
+
+  const avatarDataUri =
+    "data:image/png;base64," + resizedAvatar.toString("base64");
+
+  const avatarGroupRegex =
+    /<!-- Stylized Vector Portrait inside Avatar Clip -->[\s\S]*?(?=<!-- Inner Avatar Border Ring -->)/;
+  const newAvatarMarkup = `<!-- Custom User Avatar inside Avatar Clip -->
+    <g clip-path="url(#avatar-clip)">
+      <image href="${avatarDataUri}" x="48.5" y="100.5" width="167" height="167" preserveAspectRatio="xMidYMid slice" />
+    </g>
+
+    `;
+
+  return svgString.replace(avatarGroupRegex, newAvatarMarkup);
+}
 
 function getFontFiles(): string[] {
   const localFonts = join(process.cwd(), "src", "assets", "fonts");
@@ -36,16 +72,32 @@ async function main() {
   const useBaked = process.argv.includes("--baked");
   const svgPath = useBaked ? BAKED_SVG_PATH : ORIGINAL_SVG_PATH;
 
+  // Check for custom avatar url
+  const avatarArgIdx = process.argv.findIndex((a) => a === "--avatar" || a === "--avatar-url");
+  const avatarUrl = avatarArgIdx !== -1 ? process.argv[avatarArgIdx + 1] : undefined;
+
   console.log("================================================================================");
   console.log(
     `   FULL SVG TO PNG RENDERER SERVICE [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`,
   );
   console.log(`   Mode:       ${useBaked ? "BAKED SHADOW (PRE-RENDERED CONTAINER)" : "DYNAMIC FILTERS (ORIGINAL SVG)"}`);
   console.log(`   Source SVG: ${useBaked ? "src/assets/profile_with_baked_shadow.svg" : "src/assets/profile_with_platinum_rank.svg"}`);
+  if (avatarUrl) {
+    console.log(`   Avatar:     Custom URL (${avatarUrl.slice(0, 60)}...)`);
+  } else {
+    console.log(`   Avatar:     Default Vector Artwork`);
+  }
   console.log("================================================================================\n");
 
-  const svgContent = await readFile(svgPath);
-  console.log(`Source SVG file size: ${(svgContent.length / 1024).toFixed(1)} KB`);
+  let svgContent = await readFile(svgPath, "utf8");
+
+  if (avatarUrl) {
+    console.log("Fetching and clipping custom avatar from URL...");
+    svgContent = await injectCustomAvatar(svgContent, avatarUrl);
+    console.log("Injected circular custom avatar into SVG.");
+  }
+
+  console.log(`Source SVG string size: ${(Buffer.byteLength(svgContent, "utf8") / 1024).toFixed(1)} KB`);
 
   const fontFiles = getFontFiles();
   console.log(`Loaded font files for Resvg: ${fontFiles.length} fonts (Poppins)`);
