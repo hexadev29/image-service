@@ -4,11 +4,17 @@ import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
-const SVG_PATH = join(
+const ORIGINAL_SVG_PATH = join(
   process.cwd(),
   "src",
   "assets",
   "profile_with_platinum_rank.svg",
+);
+const BAKED_SVG_PATH = join(
+  process.cwd(),
+  "src",
+  "assets",
+  "profile_with_baked_shadow.svg",
 );
 
 function getFontFiles(): string[] {
@@ -27,15 +33,18 @@ async function main() {
   const is100 =
     process.argv.includes("--100") || process.argv.includes("-n=100");
   const count = is100 ? 100 : 1;
+  const useBaked = process.argv.includes("--baked");
+  const svgPath = useBaked ? BAKED_SVG_PATH : ORIGINAL_SVG_PATH;
 
   console.log("================================================================================");
   console.log(
     `   FULL SVG TO PNG RENDERER SERVICE [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`,
   );
-  console.log(`   Source SVG: src/assets/profile_with_platinum_rank.svg`);
+  console.log(`   Mode:       ${useBaked ? "BAKED SHADOW (PRE-RENDERED CONTAINER)" : "DYNAMIC FILTERS (ORIGINAL SVG)"}`);
+  console.log(`   Source SVG: ${useBaked ? "src/assets/profile_with_baked_shadow.svg" : "src/assets/profile_with_platinum_rank.svg"}`);
   console.log("================================================================================\n");
 
-  const svgContent = await readFile(SVG_PATH);
+  const svgContent = await readFile(svgPath);
   console.log(`Source SVG file size: ${(svgContent.length / 1024).toFixed(1)} KB`);
 
   const fontFiles = getFontFiles();
@@ -47,7 +56,7 @@ async function main() {
     background: "rgba(0,0,0,0)",
     font: {
       fontFiles,
-      loadSystemFonts: true,
+      loadSystemFonts: false,
       defaultFontFamily: "Poppins",
     },
   });
