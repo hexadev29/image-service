@@ -10,6 +10,11 @@ import {
 } from "../rank-profile/RankProfileCardRenderer.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
 import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
+import {
+  printProcessHeader,
+  logWithPid,
+  printPeakResourceUsage,
+} from "../utils/processMetrics.js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
 const RANKS_DIR = join(process.cwd(), "src", "assets", "ranks");
@@ -560,12 +565,9 @@ export async function benchmarkVariant(
 // ─────────────────────────────────────────────────────────────────────────────
 
 export async function runSelective2xBenchmark(iterations = 300) {
-  console.log("================================================================================");
-  console.log("   BENCHMARK: SELECTIVE 2× RANK ICON RENDERING (VARIANT D vs A & C)");
-  console.log(`   Node.js: ${process.version} | Platform: ${process.platform} (${process.arch})`);
-  console.log(`   Main profile dimensions: 1200 × 760 (Scale 1)`);
-  console.log(`   Iterations per variant: ${iterations} (with 15 pre-warmup renders)`);
-  console.log("================================================================================\n");
+  printProcessHeader("Benchmark: Selective 2x Rank Icon Rendering (Variant D vs A & C)");
+  logWithPid(`Main profile dimensions: 1200 x 760 (Scale 1)`);
+  logWithPid(`Iterations per variant: ${iterations} (with 15 pre-warmup renders)`);
 
   // 1. Prepare Variant C (Direct Pre-sizing)
   console.log(">>> [1/4] Preparing Variant C (Direct 1-stage Lanczos3 Resizing)...");
@@ -688,8 +690,7 @@ export async function runSelective2xBenchmark(iterations = 300) {
   console.log("\n================================================================================");
   console.log(`   BENCHMARK COMPLETED SUCCESSFULLY!`);
   console.log(`   Detailed Markdown Report: ${reportPath}`);
-  console.log(`   Visual Artifacts: ${ARTIFACTS_DIR}`);
-  console.log("================================================================================\n");
+  printPeakResourceUsage("Selective 2x Benchmark Complete");
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

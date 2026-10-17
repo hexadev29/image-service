@@ -5,6 +5,11 @@ import { Resvg } from "@resvg/resvg-js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
 import sharp from "sharp";
+import {
+  printProcessHeader,
+  logWithPid,
+  printPeakResourceUsage,
+} from "../utils/processMetrics.js";
 
 const ORIGINAL_SVG_PATH = join(
   process.cwd(),
@@ -19,30 +24,22 @@ const BAKED_SVG_PATH = join(
   "profile_with_baked_shadow.svg",
 );
 
+import { AvatarCache } from "../rank-profile/AvatarCache.js";
+
+const DEFAULT_TEST_AVATAR =
+  "https://avatars.githubusercontent.com/u/9919?s=200&v=4";
+
 export async function injectCustomAvatar(
   svgString: string,
   avatarUrlOrBuffer: string | Buffer,
 ): Promise<string> {
-  let rawBuffer: Buffer;
-  if (typeof avatarUrlOrBuffer === "string") {
-    const res = await fetch(avatarUrlOrBuffer);
-    if (!res.ok) throw new Error(`Failed to fetch avatar: ${res.statusText}`);
-    rawBuffer = Buffer.from(await res.arrayBuffer());
-  } else {
-    rawBuffer = avatarUrlOrBuffer;
-  }
-
-  // Resize with sharp to 334x334 (2x retina for 167x167 avatar circle)
-  const resizedAvatar = await sharp(rawBuffer)
-    .resize(334, 334, { fit: "cover" })
-    .png()
-    .toBuffer();
-
-  const avatarDataUri =
-    "data:image/png;base64," + resizedAvatar.toString("base64");
+  const avatarDataUri = await AvatarCache.getInstance().getAvatarDataUri(
+    avatarUrlOrBuffer,
+    334,
+  );
 
   const avatarGroupRegex =
-    /<!-- Stylized Vector Portrait inside Avatar Clip -->[\s\S]*?(?=<!-- Inner Avatar Border Ring -->)/;
+    /<!-- (Stylized Vector Portrait|Custom User Avatar) inside Avatar Clip -->[\s\S]*?(?=<!-- Inner Avatar Border Ring -->)/;
   const newAvatarMarkup = `<!-- Custom User Avatar inside Avatar Clip -->
     <g clip-path="url(#avatar-clip)">
       <image href="${avatarDataUri}" x="48.5" y="100.5" width="167" height="167" preserveAspectRatio="xMidYMid slice" />
@@ -69,38 +66,42 @@ async function main() {
   const is100 =
     process.argv.includes("--100") || process.argv.includes("-n=100");
   const count = is100 ? 100 : 1;
-  const useBaked = process.argv.includes("--baked");
+  const useBaked = process.argv.includes("--baked") || !process.argv.includes("--original");
   const svgPath = useBaked ? BAKED_SVG_PATH : ORIGINAL_SVG_PATH;
 
   // Check for custom avatar url
-  const avatarArgIdx = process.argv.findIndex((a) => a === "--avatar" || a === "--avatar-url");
-  const avatarUrl = avatarArgIdx !== -1 ? process.argv[avatarArgIdx + 1] : undefined;
-
-  console.log("================================================================================");
-  console.log(
-    `   FULL SVG TO PNG RENDERER SERVICE [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`,
-  );
-  console.log(`   Mode:       ${useBaked ? "BAKED SHADOW (PRE-RENDERED CONTAINER)" : "DYNAMIC FILTERS (ORIGINAL SVG)"}`);
-  console.log(`   Source SVG: ${useBaked ? "src/assets/profile_with_baked_shadow.svg" : "src/assets/profile_with_platinum_rank.svg"}`);
-  if (avatarUrl) {
-    console.log(`   Avatar:     Custom URL (${avatarUrl.slice(0, 60)}...)`);
-  } else {
-    console.log(`   Avatar:     Default Vector Artwork`);
+  const avatarArgIdx = process.argv.findIndex((a) => a === "--avatar" || a === "--avatar-url" || a === "--with-avatar");
+  let avatarUrl: string | undefined;
+  if (avatarArgIdx !== -1) {
+    const nextArg = process.argv[avatarArgIdx + 1];
+    avatarUrl = nextArg && !nextArg.startsWith("-") ? nextArg : DEFAULT_TEST_AVATAR;
   }
-  console.log("================================================================================\n");
+
+  printProcessHeader(
+    `Full SVG to PNG Renderer Service [${count === 1 ? "SINGLE IMAGE" : "100 IMAGES"}]`,
+  );
+  logWithPid(`Mode:       ${useBaked ? "BAKED SHADOW (PRE-RENDERED CONTAINER + HYBRID RANK PNG)" : "DYNAMIC FILTERS (ORIGINAL SVG)"}`);
+  logWithPid(`Source SVG: ${useBaked ? "src/assets/profile_with_baked_shadow.svg" : "src/assets/profile_with_platinum_rank.svg"}`);
+  if (avatarUrl) {
+    logWithPid(`Avatar:     URL Profile Image (${avatarUrl.slice(0, 60)}...)`);
+  } else {
+    logWithPid(`Avatar:     Default Vector Artwork`);
+  }
 
   let svgContent = await readFile(svgPath, "utf8");
 
   if (avatarUrl) {
-    console.log("Fetching and clipping custom avatar from URL...");
+    logWithPid("Fetching and clipping custom avatar via AvatarCache...");
+    const t0 = performance.now();
     svgContent = await injectCustomAvatar(svgContent, avatarUrl);
-    console.log("Injected circular custom avatar into SVG.");
+    const avatarDur = performance.now() - t0;
+    logWithPid(`Injected circular custom avatar into SVG (${avatarDur.toFixed(1)} ms, cached).`);
   }
 
-  console.log(`Source SVG string size: ${(Buffer.byteLength(svgContent, "utf8") / 1024).toFixed(1)} KB`);
+  logWithPid(`Source SVG string size: ${(Buffer.byteLength(svgContent, "utf8") / 1024).toFixed(1)} KB`);
 
   const fontFiles = getFontFiles();
-  console.log(`Loaded font files for Resvg: ${fontFiles.length} fonts (Poppins)`);
+  logWithPid(`Loaded font files for Resvg: ${fontFiles.length} fonts (Poppins)`);
 
   // Initialize Resvg instance fitted to 1200 width (Scale 1) with font registration
   const resvg = new Resvg(svgContent, {
@@ -115,7 +116,7 @@ async function main() {
 
   if (count === 1) {
     // Single render test
-    console.log("Rendering single SVG card to PNG format...");
+    logWithPid("Rendering single SVG card to PNG format...");
     const t0 = performance.now();
     const rendered = resvg.render();
     const pngBuffer = Buffer.from(rendered.asPng());
@@ -124,17 +125,23 @@ async function main() {
     const outputPath = join(ARTIFACTS_DIR, "profile-from-svg.png");
     await writeFile(outputPath, pngBuffer);
 
-    console.log(`\n--------------------------------------------------------------------------------`);
-    console.log(`SINGLE RENDER RESULT:`);
-    console.log(`  - Output File:       artifacts/profile-from-svg.png`);
-    console.log(`  - Dimensions:        ${rendered.width} x ${rendered.height} (Scale 1)`);
-    console.log(`  - PNG File Size:     ${(pngBuffer.length / 1024).toFixed(1)} KB`);
-    console.log(`  - Render Duration:   ${duration.toFixed(1)} ms`);
-    console.log(`  - Typography Status: Verified (All text, names, stats & numbers rendered)`);
-    console.log(`--------------------------------------------------------------------------------\n`);
+    const isGold = svgContent.includes("Gold rank icon");
+    const rankLabel = isGold
+      ? "Variant C Pre-sized Gold PNG (Hybrid SVG)"
+      : "Variant C Pre-sized Rank PNG (Hybrid SVG)";
+
+    logWithPid(`--------------------------------------------------------------------------------`);
+    logWithPid(`SINGLE RENDER RESULT:`);
+    logWithPid(`  - Output File:       artifacts/profile-from-svg.png`);
+    logWithPid(`  - Dimensions:        ${rendered.width} x ${rendered.height} (Scale 1)`);
+    logWithPid(`  - PNG File Size:     ${(pngBuffer.length / 1024).toFixed(1)} KB`);
+    logWithPid(`  - Render Duration:   ${duration.toFixed(2)} ms`);
+    logWithPid(`  - Rank Icon:         ${rankLabel}`);
+    logWithPid(`  - Typography Status: Verified (All text, names, stats & numbers rendered)`);
+    logWithPid(`--------------------------------------------------------------------------------`);
   } else {
     // 100 images workload directly without pre-warmup
-    console.log(`Directly rendering 100 images of full SVG to PNG format (no warm-up)...`);
+    logWithPid(`Directly rendering 100 images of full SVG to PNG format (no warm-up)...`);
     const durations: number[] = [];
     let totalBytes = 0;
     let samplePng: Buffer | null = null;
@@ -151,6 +158,10 @@ async function main() {
       durations.push(elapsed);
       totalBytes += pngBuffer.length;
       if (!samplePng) samplePng = pngBuffer;
+
+      if ((i + 1) % 25 === 0 || i === 0) {
+        logWithPid(`Render progress: [${String(i + 1).padStart(3, " ")}/100] images completed (current image: ${elapsed.toFixed(2)} ms)`);
+      }
     }
 
     const wallElapsed = performance.now() - tWallStart;
@@ -161,34 +172,45 @@ async function main() {
     if (samplePng) await writeFile(outputPath, samplePng);
 
     const sorted = [...durations].sort((a, b) => a - b);
-    const avgMs = (durations.reduce((sum, v) => sum + v, 0) / 100).toFixed(1);
-    const medianMs = sorted[50].toFixed(1);
-    const p95Ms = sorted[95].toFixed(1);
-    const minMs = sorted[0].toFixed(1);
-    const maxMs = sorted[99].toFixed(1);
+    const avgMs = (durations.reduce((sum, v) => sum + v, 0) / 100).toFixed(2);
+    const medianMs = sorted[50].toFixed(2);
+    const p95Ms = sorted[95].toFixed(2);
+    const minMs = sorted[0].toFixed(2);
+    const maxMs = sorted[99].toFixed(2);
     const totalMB = (totalBytes / (1024 * 1024)).toFixed(2);
     const throughput = (100 / (wallElapsed / 1000)).toFixed(1);
     const mbps = (Number(totalMB) / (wallElapsed / 1000)).toFixed(2);
 
-    console.log(`\n================================================================================`);
-    console.log(`100-IMAGE SVG TO PNG BENCHMARK RESULTS:`);
-    console.log(`================================================================================`);
-    console.log(`  - Total Wall-Clock:      ${wallElapsed.toFixed(1)} ms (${(wallElapsed / 1000).toFixed(2)} s)`);
-    console.log(`  - Throughput:            ${throughput} images/sec`);
-    console.log(`  - Total Data Generated:  ${totalMB} MB (${(totalBytes / 1024 / 100).toFixed(1)} KB/image)`);
-    console.log(`  - Data Generation Rate:  ${mbps} MB/s`);
-    console.log(`  - Average Latency:       ${avgMs} ms per image`);
-    console.log(`  - Median Latency:        ${medianMs} ms`);
-    console.log(`  - P95 Latency:           ${p95Ms} ms`);
-    console.log(`  - Min / Max Latency:     ${minMs} ms / ${maxMs} ms`);
-    console.log(`  - Total CPU Time:        ${cpuMs.toFixed(1)} ms`);
-    console.log(`  - Output File:           artifacts/profile-from-svg.png`);
-    console.log(`  - Typography:            Rendered with Poppins font family`);
-    console.log(`================================================================================\n`);
+    logWithPid(`================================================================================`);
+    logWithPid(`100-IMAGE SVG TO PNG BENCHMARK RESULTS:`);
+    logWithPid(`================================================================================`);
+    logWithPid(`  - Total Wall-Clock:      ${wallElapsed.toFixed(2)} ms (${(wallElapsed / 1000).toFixed(2)} s)`);
+    logWithPid(`  - Throughput:            ${throughput} images/sec`);
+    logWithPid(`  - Total Data Generated:  ${totalMB} MB (${(totalBytes / 1024 / 100).toFixed(1)} KB/image)`);
+    logWithPid(`  - Data Generation Rate:  ${mbps} MB/s`);
+    logWithPid(`  - Average Latency:       ${avgMs} ms per image`);
+    logWithPid(`  - Median Latency:        ${medianMs} ms`);
+    logWithPid(`  - P95 Latency:           ${p95Ms} ms`);
+    logWithPid(`  - Min / Max Latency:     ${minMs} ms / ${maxMs} ms`);
+    const isGold = svgContent.includes("Gold rank icon");
+    const rankLabel = isGold
+      ? "Variant C Pre-sized Gold PNG (Hybrid SVG)"
+      : "Variant C Pre-sized Rank PNG (Hybrid SVG)";
+
+    logWithPid(`  - Total CPU Time:        ${cpuMs.toFixed(2)} ms (${(cpuMs / 100).toFixed(2)} ms/image)`);
+    logWithPid(`  - Rank Icon:             ${rankLabel}`);
+    logWithPid(`  - Output File:           artifacts/profile-from-svg.png`);
+    logWithPid(`  - Typography:            Rendered with Poppins font family`);
+    logWithPid(`================================================================================`);
   }
+
+  printPeakResourceUsage(
+    count === 1 ? "SVG Single Render Complete" : "SVG 100-Image Workload Complete",
+  );
 }
 
 main().catch((err) => {
-  console.error("Render failed:", err);
+  console.error(`[PID: ${process.pid}] Render failed:`, err);
   process.exit(1);
 });
+

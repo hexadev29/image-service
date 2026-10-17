@@ -2,6 +2,13 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { RankProfileCardRenderer } from "../rank-profile/RankProfileCardRenderer.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
 import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
+import {
+  printProcessHeader,
+  logWithPid,
+  printPeakResourceUsage,
+} from "../utils/processMetrics.js";
+
+printProcessHeader("Render Scale 1 Card (PNG Baseline)");
 
 const payload: RankProfileCardInput = {
   ...sampleRankProfile,
@@ -24,7 +31,9 @@ const duration = (performance.now() - start).toFixed(1);
 const outputPath = "artifacts/scale1-png.png";
 await writeFile(outputPath, Buffer.from(result.buffer));
 
-console.log(`Rendered Scale 1 with PNG assets in ${duration} ms.`);
-console.log(
+logWithPid(`Rendered Scale 1 with PNG assets in ${duration} ms.`);
+logWithPid(
   `Saved to: ${outputPath} (${(result.buffer.length / 1024).toFixed(1)} KB, 1200x760)`,
 );
+
+printPeakResourceUsage("Scale 1 PNG Render Complete");

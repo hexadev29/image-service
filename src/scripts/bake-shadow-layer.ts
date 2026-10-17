@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
@@ -97,6 +98,38 @@ export async function generateBakedAssets(): Promise<{
     /    <!-- Subtle Inner Panel Shadow -->[\s\S]*?<\/filter>\n\n/g,
     "",
   );
+
+  // 4. Replace embedded heavy vector rank icon with Variant C pre-sized Gold PNG Data URI (60x60)
+  const rankVectorRegex =
+    /<!-- Uploaded platinum rank SVG embedded at the original rank-icon position -->[\s\S]*?<\/svg>\s*<\/g>|<!-- (Platinum|Gold) rank icon \(Variant C Pre-sized PNG Data URI.*?\) -->[\s\S]*?<\/g>/;
+  if (rankVectorRegex.test(fullSvg)) {
+    const goldPngPath = join(
+      process.cwd(),
+      "tmp",
+      "presized-ranks-cache",
+      "gold-60x60.png",
+    );
+    let goldBuf: Buffer;
+    if (existsSync(goldPngPath)) {
+      goldBuf = await readFile(goldPngPath);
+    } else {
+      const sharp = (await import("sharp")).default;
+      goldBuf = await sharp(join(ASSETS_DIR, "ranks", "gold.png"))
+        .resize(60, 60, {
+          fit: "contain",
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+          kernel: "lanczos3",
+        })
+        .png({ compressionLevel: 6 })
+        .toBuffer();
+    }
+    const goldUri = `data:image/png;base64,${goldBuf.toString("base64")}`;
+    const rankReplacement = `<!-- Gold rank icon (Variant C Pre-sized PNG Data URI - 60x60) -->
+    <g transform="translate(424, 123)">
+      <image href="${goldUri}" x="-30" y="-30" width="60" height="60" preserveAspectRatio="xMidYMid meet" />
+    </g>`;
+    fullSvg = fullSvg.replace(rankVectorRegex, rankReplacement);
+  }
 
   await writeFile(BAKED_SVG_OUTPUT, fullSvg, "utf8");
 

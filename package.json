@@ -14,12 +14,15 @@
     "render:compare": "tsx src/scripts/render-comparison-samples.ts",
     "test:bandwidth": "npm run build && tsx src/scripts/test-scale1-svg-bandwidth.ts",
     "render:svg:single": "tsx src/scripts/render-svg-card.ts",
+    "render:svg:baked": "tsx src/scripts/render-svg-card.ts --baked",
     "test:svg:100": "tsx src/scripts/render-svg-card.ts --100",
+    "benchmark:svg:baked:100": "tsx src/scripts/render-svg-card.ts --baked --100",
     "bake:shadow": "tsx src/scripts/bake-shadow-layer.ts",
     "test:baked-shadow": "tsx src/scripts/test-baked-shadow.ts",
     "benchmark:rank-svg": "npm run build && tsx src/scripts/benchmark-rank-svg.ts",
     "benchmark:png-cache": "tsx src/scripts/benchmark-png-caching.ts",
-    "benchmark:selective-2x": "tsx src/scripts/benchmark-selective-2x.ts"
+    "benchmark:selective-2x": "tsx src/scripts/benchmark-selective-2x.ts",
+    "benchmark:hybrid-svg": "tsx src/scripts/benchmark-hybrid-svg.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.78",

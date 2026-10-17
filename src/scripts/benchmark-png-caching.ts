@@ -10,6 +10,11 @@ import {
 } from "../rank-profile/RankProfileCardRenderer.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
 import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
+import {
+  printProcessHeader,
+  logWithPid,
+  printPeakResourceUsage,
+} from "../utils/processMetrics.js";
 
 const ARTIFACTS_DIR = join(process.cwd(), "artifacts");
 const RANKS_DIR = join(process.cwd(), "src", "assets", "ranks");
@@ -644,11 +649,8 @@ export async function benchmarkVariant(
 // ─────────────────────────────────────────────────────────────────────────────
 
 export async function runFullBenchmarkSuite(iterations = 300) {
-  console.log("================================================================================");
-  console.log("   BENCHMARK: PNG RANK ASSET CACHING & RENDERING PERFORMANCE");
-  console.log(`   Node.js: ${process.version} | Platform: ${process.platform} (${process.arch})`);
-  console.log(`   Iterations per variant: ${iterations} (with 15 pre-warmup renders)`);
-  console.log("================================================================================\n");
+  printProcessHeader("Benchmark: PNG Rank Asset Caching & Rendering Performance");
+  logWithPid(`Iterations per variant: ${iterations} (with 15 pre-warmup renders)`);
 
   const results: {
     scale1: {
@@ -988,9 +990,7 @@ export async function runFullBenchmarkSuite(iterations = 300) {
   console.log("\n================================================================================");
   console.log(`   BENCHMARK COMPLETED SUCCESSFULLY!`);
   console.log(`   Detailed Markdown Report written to: ${reportPath}`);
-  console.log(`   Visual Artifacts written to: ${ARTIFACTS_DIR}`);
-  console.log("================================================================================\n");
-
+  printPeakResourceUsage("PNG Caching Benchmark Complete");
   return results;
 }
 

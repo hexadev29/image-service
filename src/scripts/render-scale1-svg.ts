@@ -5,6 +5,13 @@ import {
 } from "../rank-profile/experiments/rankSvgAssetCache.js";
 import { sampleRankProfile } from "./rankProfile.sample.js";
 import type { RankProfileCardInput } from "../rank-profile/rankProfile.types.js";
+import {
+  printProcessHeader,
+  logWithPid,
+  printPeakResourceUsage,
+} from "../utils/processMetrics.js";
+
+printProcessHeader("Render Scale 1 Card (Cached 2x SVG)");
 
 const payload: RankProfileCardInput = {
   ...sampleRankProfile,
@@ -17,6 +24,7 @@ const payload: RankProfileCardInput = {
 
 await mkdir("artifacts", { recursive: true });
 
+logWithPid("Initializing RankSvgAssetCache (warming up platinum)...");
 const svgCache = new RankSvgAssetCache();
 // Pre-rasterize and warm up SVG cache at 2x (60px header -> 120px, 48px transition -> 96px)
 await svgCache.warmUp("platinum", [60, 48], 2);
@@ -30,7 +38,9 @@ const duration = (performance.now() - start).toFixed(1);
 const outputPath = "artifacts/scale1-svg.png";
 await writeFile(outputPath, Buffer.from(result.buffer));
 
-console.log(`Rendered Scale 1 with Cached 2x SVG in ${duration} ms.`);
-console.log(
+logWithPid(`Rendered Scale 1 with Cached 2x SVG in ${duration} ms.`);
+logWithPid(
   `Saved to: ${outputPath} (${(result.buffer.length / 1024).toFixed(1)} KB, 1200x760)`,
 );
+
+printPeakResourceUsage("Scale 1 SVG Render Complete");
