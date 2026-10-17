@@ -154,6 +154,9 @@ async function main() {
       if ((i + 1) % 25 === 0 || i === 0) {
         logWithPid(`Render progress: [${String(i + 1).padStart(3, " ")}/100] images completed (current image: ${elapsed.toFixed(2)} ms)`);
       }
+
+      // Yield to libuv event loop to allow GC and simulate real-world request cycles
+      await new Promise((resolve) => setImmediate(resolve));
     }
 
     const wallElapsed = performance.now() - tWallStart;
