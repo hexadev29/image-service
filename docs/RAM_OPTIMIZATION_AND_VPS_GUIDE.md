@@ -122,17 +122,25 @@ npm run build
 
 ### Step 2: Single-Image Verification
 
-#### Run A: Without Avatar (Ultra-Low RAM Mode)
+#### Run A: Without Avatar
 ```bash
+# Production compiled (Ultra-low RAM: ~62 MB Peak)
 npm run render:svg:prod
+
+# Or development / tsx mode
+npm run render:svg:single -- --baked
 ```
-*Expected output: Peak maxRSS ~62 MB, render duration ~20–22 ms, output saved to `artifacts/profile-from-svg.png`.*
+*Expected output: Peak maxRSS ~62 MB (prod) / ~92 MB (tsx), render duration ~20–22 ms, output saved to `artifacts/profile-from-svg.png`.*
 
 #### Run B: With Custom Discord Avatar (167px Auto-Resized & Cached)
 ```bash
-npm run render:svg:prod -- --avatar "https://cdn.discordapp.com/attachments/1554906301597753486/1560807282122428456/image.png?ex=6ad40e8e&is=6ad2bd0e&hm=c770c7d099252d81ed46fad68d4db1051c3059ab7f1f9590678bfe27f7636013&"
+# Standard command (tsx development mode):
+npm run render:svg:single -- --baked --avatar "https://cdn.discordapp.com/attachments/1554906301597753486/1560807282122428456/image.png?ex=6ad5600e&is=6ad40e8e&hm=da49193721540705926e745c452ecc81db8ff8375d73a5c426f511bd106c19e3&"
+
+# Or production compiled mode (bypasses tsx/esbuild for lowest RAM footprint):
+npm run render:svg:prod -- --avatar "https://cdn.discordapp.com/attachments/1554906301597753486/1560807282122428456/image.png?ex=6ad5600e&is=6ad40e8e&hm=da49193721540705926e745c452ecc81db8ff8375d73a5c426f511bd106c19e3&"
 ```
-*Expected output: SVG size 96.1 KB (70% smaller), cached in AvatarCache, peak maxRSS ~118 MB.*
+*Expected output: Source SVG size 96.1 KB (70% smaller than original 321.7 KB), avatar resized to 167×167px, cached in AvatarCache with 25MB LRU limit, render duration ~20–21 ms, peak maxRSS ~118–124 MB.*
 
 ---
 
@@ -146,9 +154,9 @@ npm run benchmark:svg:prod:100
 
 #### Run B: 100-Image Workload (With Custom Avatar)
 ```bash
-npm run benchmark:svg:prod:100 -- --avatar "https://cdn.discordapp.com/attachments/1554906301597753486/1560807282122428456/image.png?ex=6ad40e8e&is=6ad2bd0e&hm=c770c7d099252d81ed46fad68d4db1051c3059ab7f1f9590678bfe27f7636013&"
+npm run benchmark:svg:prod:100 -- --avatar "https://cdn.discordapp.com/attachments/1554906301597753486/1560807282122428456/image.png?ex=6ad5600e&is=6ad40e8e&hm=da49193721540705926e745c452ecc81db8ff8375d73a5c426f511bd106c19e3&"
 ```
-*Expected output: Avatar fetched and clipped once (~500 ms), then 100 renders complete in ~2.07s (48+ img/sec).*
+*Expected output: Avatar fetched and clipped once (~300–500 ms), then 100 renders complete in ~2.07s (48+ img/sec).*
 
 ---
 
